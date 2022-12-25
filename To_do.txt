@@ -1,0 +1,9 @@
+To_Do:
+-	i need to create my own env if there is no env;
+-	create a fonction that free the env;
+-	create a fonction that print a sorted env
+-	builting :
+	-> echo +
+	-> cd
+	-> export
+	-> unset
