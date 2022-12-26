@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:16:50 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/25 23:55:28 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/26 01:36:26 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	multi_pipes(t_env **menv, t_list *cmds, int cmd_nbr)
 	int	prev_in;
 	int	prev_out;
 	int	fd[2];
-	int	id;
+	int	id[cmd_nbr];
 	t_list *tmp;
 
 	tmp = cmds;
@@ -90,8 +90,8 @@ void	multi_pipes(t_env **menv, t_list *cmds, int cmd_nbr)
 		prev_out = fd[1];
 		if (i + 1 != cmd_nbr)
 			pipe(fd);
-		id = fork();
-		if (id == 0)
+		id[i] = fork();
+		if (id[i] == 0)
 		{
 			if (1 != cmd_nbr)
 			{
@@ -109,7 +109,9 @@ void	multi_pipes(t_env **menv, t_list *cmds, int cmd_nbr)
 		tmp = tmp->next;
 		i++;
 	}
-	while (waitpid(-1, &status, 0) != -1);
+	i = 0;
+	while (waitpid(id[i++], &status, 0) != -1);
 	if (WIFEXITED(status))
 		WEXITSTATUS(status);
+		printf("status == %d\n", status % 255);
 }

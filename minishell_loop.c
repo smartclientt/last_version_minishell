@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 11:23:55 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/26 01:04:30 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/26 01:25:09 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	minishell_loop(t_env **menv)
 			exit(0);
 		add_history(line);
 		tokens = get_tokens(line);
+		tokens = expand_dollar(*menv,tokens);
 		cmds = get_cmds(tokens);
 		execution(menv, cmds, ft_lstsize(cmds));
 		free(line);
