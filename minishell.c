@@ -6,45 +6,45 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:40 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/25 23:38:06 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/26 01:04:56 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int main(int ac, char **av, char **env)
-// {
-// 	(void)ac;
-// 	(void)av;
-// 	t_env *menv;
-
-// 	fill_env(&menv, env);
-// 	minishell_loop(menv);
-// }
-
 int main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-    char *cmd = "cat | ls | wc | grep";
-    t_list *tokens;
-    t_list  *cmds;
-	t_env	*menv;
+	t_env *menv;
 
-    menv = NULL;
-    tokens = NULL;
-    fill_env(&menv, env);
-    //add_history(cmd);
-    //print_env(menv);
-    tokens = get_tokens(cmd);
-    // print_list_tokens(tokens);
-    // tokens = expand_dollar(menv,tokens);
-    // print_list_tokens(tokens);
-    cmds = get_cmds(tokens);
-    print_list(cmds);
-	printf("-----------------------------------------------\n");
-    execution(&menv, cmds, ft_lstsize(cmds));
+	fill_env(&menv, env);
+	minishell_loop(&menv);
 }
+
+// int main(int ac, char **av, char **env)
+// {
+// 	(void)ac;
+// 	(void)av;
+//     char *cmd = "ls -la";
+//     t_list *tokens;
+//     t_list  *cmds;
+// 	t_env	*menv;
+
+//     menv = NULL;
+//     tokens = NULL;
+//     fill_env(&menv, env);
+//     //add_history(cmd);
+//     //print_env(menv);
+//     tokens = get_tokens(cmd);
+//     // print_list_tokens(tokens);
+//     // tokens = expand_dollar(menv,tokens);
+//     // print_list_tokens(tokens);
+//     cmds = get_cmds(tokens);
+//     print_list(cmds);
+// 	printf("-----------------------------------------------\n");
+//     execution(&menv, cmds, ft_lstsize(cmds));
+// }
 
 // int main(int ac, char **av, char **env)
 // {
