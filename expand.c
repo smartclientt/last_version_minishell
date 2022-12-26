@@ -35,7 +35,7 @@ char *get_kw(t_env *menv,char *str,int *i)
     return (NULL);
 }
 
-t_list *expand_dollar(t_env *menv,t_list *tokens)
+t_list *expand_path(t_env *menv,t_list *tokens)
 {
     t_list  *tmp;
     char	*word;

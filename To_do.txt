@@ -6,4 +6,28 @@ To_Do:
 	-> echo +
 	-> cd
 	-> export
-	-> unset
+	-> unset\
+
+
+TODO:
+	- handle signals (ctrl-C, ctrl-D, ctrl-\ (optional))
+	- Handle redirections:
+		- for each redir, check the token type:
+			if token == >:
+				fdout = open(filename, O_WRONLY | O_CREAT)
+			elif token == >>:
+				fdout = open(filename, O_APPEND | O_CREAT)
+			elif token == <:
+				fdin = open(filename, O_RDONLY)
+				if (fdin < 0 || fdout < 0)
+					perror("minishell")
+	- Handle heredocs:
+		- set global fdin and fdout to 0 and 1 respectively
+		- create a new t_string
+		- in an infinite loop:
+			- readline in buffer
+			- if buffer value == delimeter:
+
+			- append buffer to t_string
+			- free buffer
+----- parsing ------ 

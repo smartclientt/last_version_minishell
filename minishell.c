@@ -3,24 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:40 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/26 01:04:56 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/26 12:23:24 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int main(int ac, char **av, char **env)
-// {
-// 	(void)ac;
-// 	(void)av;
-// 	t_env *menv;
+int main(int ac, char **av, char **env)
+{
+	t_env *menv;
 
-// 	fill_env(&menv, env);
-// 	minishell_loop(&menv);
-// }
+	if (ac > 1 && av[0])
+	{
+		write(2, "minishell: too many arguments\n", 30);
+		return (1);
+	}
+	fill_env(&menv, env);
+	minishell_loop(&menv);
+}
 
 t_list	*ft_lst_del_first(t_list *tokens)
 {
@@ -38,44 +41,44 @@ t_list	*ft_lst_del_first(t_list *tokens)
 	return (tmp);
 }
 
-int main(int ac, char **av, char **env)
-{
-    char *cmd = "\"e\"\"c\"h\'o\' hey";
-    t_list *tokens;
-    t_list  *cmds;
-	t_env	*menv;
-	(void)ac;
-	(void)av;
+// int main(int ac, char **av, char **env)
+// {
+//     char *cmd = "\"e\"\"c\"h\'o\' hey";
+//     t_list *tokens;
+//     t_list  *cmds;
+// 	t_env	*menv;
+// 	(void)ac;
+// 	(void)av;
 
 
-    menv = NULL;
-    tokens = NULL;
-	v_glob = (t_glob){0};
-    // if (ac > 1 && av[0])
-	// {
-	// 	write(2, "minishell: too many arguments\n", 30);
-	// 	return (1);
-	// }
-	fill_env(&menv, env);
-    //add_history(cmd);
-    //print_env(menv);
-    tokens = get_tokens(cmd);
-	if (!tokens || !check_grammar(tokens))
-	{
-		//lst_del(&token_lst, token_del);
-		return (1);
-	}
-    // print_list_tokens(tokens);
-	tokens = ft_lst_del_first(tokens);
-    // tokens = expand_path(menv,tokens);
-	tokens = expand_exit_status(tokens);
-    // print_list_tokens(tokens);
-    cmds = get_cmds(tokens);
-    // print_list(cmds);
-	printf("-----------------------------------------------\n");
-    execution(&menv, cmds, ft_lstsize(cmds));
-	return(v_glob.exit_status);
-}
+//     menv = NULL;
+//     tokens = NULL;
+// 	v_glob = (t_glob){0};
+//     // if (ac > 1 && av[0])
+// 	// {
+// 	// 	write(2, "minishell: too many arguments\n", 30);
+// 	// 	return (1);
+// 	// }
+// 	fill_env(&menv, env);
+//     //add_history(cmd);
+//     //print_env(menv);
+//     tokens = get_tokens(cmd);
+// 	if (!tokens || !check_grammar(tokens))
+// 	{
+// 		//lst_del(&token_lst, token_del);
+// 		return (1);
+// 	}
+//     // print_list_tokens(tokens);
+// 	tokens = ft_lst_del_first(tokens);
+//     // tokens = expand_path(menv,tokens);
+// 	tokens = expand_exit_status(tokens);
+//     // print_list_tokens(tokens);
+//     cmds = get_cmds(tokens);
+//     // print_list(cmds);
+// 	printf("-----------------------------------------------\n");
+//     execution(&menv, cmds, ft_lstsize(cmds));
+// 	return(v_glob.exit_status);
+// }
 
 // int main(int ac, char **av, char **env)
 // {

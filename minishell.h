@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:42 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/25 19:52:00 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/26 13:20:24 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct s_env
 typedef struct s_glob
 {
 	int	exit_status;
+    int g_in;
+    int g_out;
 }				t_glob;
 
 t_glob		v_glob;
@@ -168,6 +170,7 @@ char	*ft_squote(char *str,int *i);
 t_list	*get_tokens(char *str);
 t_list	*expand_path(t_env *menv,t_list *tokens);
 t_list  *expand_exit_status(t_list *tokens);
+t_list	*ft_lst_del_first(t_list *tokens);
 
 //grammar
 int		check_grammar(t_list *tokens);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   some_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 00:41:44 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/25 00:41:59 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/26 12:13:29 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_cmd   *new_cmd(char **args, t_list *redirs)
         return (NULL);
     cmd->args = args;
     cmd->fdin = 0;
-    cmd->fdout = 0;
+    cmd->fdout = 1;
     cmd->redirs = redirs;
     return (cmd);
 }
