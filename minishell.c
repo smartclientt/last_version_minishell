@@ -12,39 +12,67 @@
 
 #include "minishell.h"
 
-int main(int ac, char **av, char **env)
-{
-	(void)ac;
-	(void)av;
-	t_env *menv;
-
-	fill_env(&menv, env);
-	minishell_loop(&menv);
-}
-
 // int main(int ac, char **av, char **env)
 // {
 // 	(void)ac;
 // 	(void)av;
-//     char *cmd = "ls -la";
-//     t_list *tokens;
-//     t_list  *cmds;
-// 	t_env	*menv;
+// 	t_env *menv;
 
-//     menv = NULL;
-//     tokens = NULL;
-//     fill_env(&menv, env);
-//     //add_history(cmd);
-//     //print_env(menv);
-//     tokens = get_tokens(cmd);
-//     // print_list_tokens(tokens);
-//     // tokens = expand_dollar(menv,tokens);
-//     // print_list_tokens(tokens);
-//     cmds = get_cmds(tokens);
-//     print_list(cmds);
-// 	printf("-----------------------------------------------\n");
-//     execution(&menv, cmds, ft_lstsize(cmds));
+// 	fill_env(&menv, env);
+// 	minishell_loop(&menv);
 // }
+
+t_list	*ft_lst_del_first(t_list *tokens)
+{
+	t_list	*tmp;
+	t_list	*del;
+
+	tmp = tokens;
+	if (((t_token *)tmp->content)->type == TOK_START)
+	{
+		del = tmp;
+		tmp = tmp->next;
+		free(del->content);
+		free(del);
+	}
+	return (tmp);
+}
+
+int main(int ac, char **av, char **env)
+{
+    char *cmd = "ls";
+    t_list *tokens;
+    t_list  *cmds;
+	t_env	*menv;
+	(void)ac;
+	(void)av;
+
+
+    menv = NULL;
+    tokens = NULL;
+    // if (ac > 1 && av[0])
+	// {
+	// 	write(2, "minishell: too many arguments\n", 30);
+	// 	return (1);
+	// }
+	fill_env(&menv, env);
+    //add_history(cmd);
+    //print_env(menv);
+    tokens = get_tokens(cmd);
+	if (!tokens || !check_grammar(tokens))
+	{
+		//lst_del(&token_lst, token_del);
+		return (1);
+	}
+    // print_list_tokens(tokens);
+	tokens = ft_lst_del_first(tokens);
+    tokens = expand_dollar(menv,tokens);
+    // print_list_tokens(tokens);
+    cmds = get_cmds(tokens);
+    // print_list(cmds);
+	printf("-----------------------------------------------\n");
+    execution(&menv, cmds, ft_lstsize(cmds));
+}
 
 // int main(int ac, char **av, char **env)
 // {

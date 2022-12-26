@@ -1,5 +1,5 @@
 #include "minishell.h"
-/*
+
 int	check_rules(e_token prv, e_token cur)
 {
 	return ((cur == TOK_PIPE && prv == TOK_START)
@@ -27,5 +27,3 @@ int	check_grammar(t_list *tokens)
 	}
 	return (1);
 }
-
-*/

@@ -46,7 +46,7 @@ t_list *expand_dollar(t_env *menv,t_list *tokens)
 
     i = 0;
     tmp = tokens;
-	key = NULL;
+	key = new_string(NULL);
     while (tmp && ((t_token *)tmp->content)->type != TOK_EOL)
     {
         if ((((t_token *)tmp->content)->type == TOK_WORD || ((t_token *)tmp->content)->type == TOK_DQUOTE) && find_dollar(((t_token *)tmp->content)->value))

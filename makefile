@@ -24,14 +24,14 @@ HEADR		=	minishell.h
 LIBFT		=	./libft/libft.a
 PATH_LIBFT	=	./libft
 CC			=	cc
-FLAGS		=	-Wall -Werror -Wextra
+FLAGS		=	-Wall -Werror -Wextra -g
 LDFLAGS		=	-lreadline
 RM			=	rm -rf
 
 all			:	$(NAME)
 				$(RM) $(OBJS)
 $(LIBFT)	:
-				@make -C $(PATH_LIBFT)
+				@make bonus -C $(PATH_LIBFT)
 $(NAME)		:	$(OBJS) $(LIBFT)
 				$(CC) $(FLAGS) $(LDFLAGS) -o $(NAME) $(OBJS) $(LIBFT)
 %.o			:	%.c $(HEADR)

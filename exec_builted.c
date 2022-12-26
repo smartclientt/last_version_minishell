@@ -36,5 +36,5 @@ void	exec_builted(t_env **menv, char **args)
 	else if (ft_strcmp(args[0], "pwd"))
 		b_pwd(*menv);
 	else if (ft_strcmp(args[0], "exit"))
-		;
+		return ;
 }

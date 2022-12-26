@@ -12,28 +12,28 @@
 
 #include "minishell.h"
 
-void	minishell_loop(t_env **menv)
-{
-	(void)menv;
-	char	*line;
-	t_list	*tokens;
-    t_list	*cmds;
+// void	minishell_loop(t_env **menv)
+// {
+// 	(void)menv;
+// 	char	*line;
+// 	t_list	*tokens;
+//     t_list	*cmds;
 	
-	while(1)
-	{
-		tokens = NULL;
-		line = NULL;
-		cmds = NULL;
-		line = readline("minishell-$ ");
-		if (ft_strcmp("exit", line))
-			exit(0);
-		add_history(line);
-		tokens = get_tokens(line);
-		tokens = expand_dollar(*menv,tokens);
-		cmds = get_cmds(tokens);
-		execution(menv, cmds, ft_lstsize(cmds));
-		free(line);
-		free(tokens);
-		free(cmds);
-	}
-}
+// 	while(1)
+// 	{
+// 		tokens = NULL;
+// 		line = NULL;
+// 		cmds = NULL;
+// 		line = readline("minishell-$ ");
+// 		if (ft_strcmp("exit", line))
+// 			exit(0);
+// 		add_history(line);
+// 		tokens = get_tokens(line);
+// 		tokens = expand_dollar(*menv,tokens);
+// 		cmds = get_cmds(tokens);
+// 		execution(menv, cmds, ft_lstsize(cmds));
+// 		free(line);
+// 		free(tokens);
+// 		free(cmds);
+// 	}
+// }

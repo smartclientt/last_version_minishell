@@ -117,6 +117,7 @@ typedef struct s_string
 
 typedef enum
 {
+    TOK_START,
 	TOK_EOL,
     TOK_WORD,
 	TOK_ROUTPUT,

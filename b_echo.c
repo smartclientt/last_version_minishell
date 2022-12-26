@@ -32,14 +32,12 @@ int	is_option(char *op)
 void	b_echo(char **arg, int fd)
 {
 	int	i;
-	int	help;
 
 	if (!arg || !*arg || fd == -1)
 		ft_putchar_fd('\n', fd);
 	else
 	{
 		i = 0;
-		help = 0;
 		while (arg[i] && is_option(arg[i]))
 			i++;
 		while (arg[i])

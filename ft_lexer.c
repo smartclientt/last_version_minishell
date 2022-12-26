@@ -1,44 +1,5 @@
 #include "minishell.h"
 
-
-int	ft_lstsize(t_list *lst)
-{
-	int		c;
-	t_list	*pl;
-
-	c = 0;
-	pl = lst;
-
-	while (pl)
-	{	
-		pl = pl->next;
-		c++;
-	}
-	return (c);
-}
-
-void	ft_lstadd_back(t_list **lst, t_list *new)
-{
-	t_list	*pl;
-	int		i;
-
-	i = 0;
-	int size = ft_lstsize(*lst);
-	if (*lst && new)
-	{
-		pl = *lst;
-		
-		while (i < size - 1)
-		{
-			pl = pl->next;
-			i++;
-		}
-		pl->next = new;
-	}
-	else
-		*lst = new;
-}
-
 char *new_word(char *str , int *i)
 {
     t_string *dst;
@@ -113,6 +74,40 @@ int check_quotes(char *str)
     return (0);
 }
 
+void    token_word(t_list **tokens, char *str, int *i)
+{
+    char *w;
+    
+    w = new_word(str , i);
+    ft_lstadd_back(tokens, new_node(new_token(w, TOK_WORD)));
+}
+
+void  add_tokens(t_list **tokens, char *str, int *i)
+{
+    if (str[(*i)] == '|')
+            ft_lstadd_back(tokens, new_node(new_token("|", TOK_PIPE)));
+        else if (str[(*i)] == '\'')
+            ft_lstadd_back(tokens, new_node(new_token(ft_squote(str , i), TOK_SINQTE)));
+        else if (str[(*i)] == '"')
+            ft_lstadd_back(tokens, new_node(new_token(ft_dquote(str , i), TOK_DQUOTE)));
+        else if (str[(*i)] == '<' && str[(*i) + 1] == '<')
+        {
+            ft_lstadd_back(tokens, new_node(new_token("<<", TOK_DRINPUT)));
+            (*i)++;
+        }
+        else if (str[(*i)] == '>' && str[(*i) + 1] == '>')
+        {
+            ft_lstadd_back(tokens, new_node(new_token(">>", TOK_DROUTPUT)));
+            (*i)++;
+        }
+        else if (str[(*i)] == '<')
+            ft_lstadd_back(tokens, new_node(new_token("<", TOK_RINPUT)));
+        else if (str[(*i)] == '>')
+            ft_lstadd_back(tokens, new_node(new_token(">", TOK_ROUTPUT)));
+        else
+            token_word(tokens, str, i);
+}
+
 t_list  *get_tokens(char *str)
 {
     t_list  *tokens = NULL;
@@ -121,43 +116,16 @@ t_list  *get_tokens(char *str)
     i = 0;
     if (str == NULL)
         return (NULL);
-    // if (check_quotes(str))
-    //     return (NULL);
-    // printf("%zu", ft_strlen(str));
     while (str[i] != '\0' && i < (int)ft_strlen(str))
     {
-		
         while(str[i] == ' ' || str[i] == '\t' || str[i] == '\r' || str[i] == '\f' || str[i] == '\v')
             i++;
-		if (str[i] == '|')
-			ft_lstadd_back(&tokens, new_node(new_token("|", TOK_PIPE)));
-		else if (str[i] == '\'')
-			ft_lstadd_back(&tokens, new_node(new_token(ft_squote(str , &i), TOK_SINQTE)));
-		else if (str[i] == '"')
-			ft_lstadd_back(&tokens, new_node(new_token(ft_dquote(str , &i), TOK_DQUOTE)));
-		else if (str[i] == '<' && str[i + 1] == '<')
-		{
-        	ft_lstadd_back(&tokens, new_node(new_token("<<", TOK_DRINPUT)));
-            i++;
-        }
-		else if (str[i] == '>' && str[i + 1] == '>')
-		{
-			ft_lstadd_back(&tokens, new_node(new_token(">>", TOK_DROUTPUT)));
-			i++;
-		}
-		else if (str[i] == '<')
-			ft_lstadd_back(&tokens, new_node(new_token("<", TOK_RINPUT)));
-		else if (str[i] == '>')
-			ft_lstadd_back(&tokens, new_node(new_token(">", TOK_ROUTPUT)));
-        else
-        {
-            char *w = new_word(str , &i);
-            ft_lstadd_back(&tokens, new_node(new_token(w, TOK_WORD)));
-        }
+        if (str[i] == '\0')
+            break;
+        add_tokens(&tokens, str, &i);
         i++;
-        // // token_parser f = get_parser(str[i]);
-        // // ft_lstadd_back(&tokens, new_node(f(str, i)));
     }
     ft_lstadd_back(&tokens, new_node(new_token("EOL", TOK_EOL)));
+    ft_lstadd_front(&tokens, new_node(new_token("START", TOK_START)));
     return (tokens);
 }
