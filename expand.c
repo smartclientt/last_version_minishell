@@ -80,3 +80,77 @@ t_list *expand_dollar(t_env *menv,t_list *tokens)
     }
     return (tokens);
 }
+
+
+// char *get_kw(t_env *menv,char *str,int *i)
+// {
+//     t_string *dst;
+//     char *value;
+
+//     value = NULL;
+//     dst = new_string("");
+//     (*i)++;
+//     while(str[(*i)] && str[(*i)] != ' ')
+//     {
+//         dst = str_append(dst, str[(*i)]);
+//         if (find_value_with_key(menv, dst->content) != NULL)
+//         {
+//             value = find_value_with_key(menv, dst->content);
+//             return (value);
+//         }
+//         (*i)++;
+//     }
+//     return (NULL);
+// }
+
+// t_string    *add_expand_path(t_env *menv, t_list *tmp,t_string *str,int *check)
+// {
+//     char    *word;
+//     // t_string *key;
+//     int         i;
+
+//     i = 0;
+//     // key = NULL;
+//     word = ((t_token *)tmp->content)->value;
+//     while(word[i] != '\0')
+//     {
+//         if (word[i]== '$')
+//         {
+//             *check = 1;
+//             // key->content = ;
+//             str = str_concate(str, ((const char *)get_kw(menv,word, &i)));
+//         }
+//         else
+//             str = str_append(str, word[i]);
+//         i++;
+//     }
+//     return (str);
+// }
+
+// void    check_expand_path(t_env *menv, t_list *tmp)
+// {
+//     t_string *str;
+//     int check;
+
+//     check = 0;
+//     if ((((t_token *)tmp->content)->type == TOK_WORD || ((t_token *)tmp->content)->type == TOK_DQUOTE) && find_dollar(((t_token *)tmp->content)->value))
+//     {
+//         str = new_string(NULL);
+//         str = add_expand_path(menv, tmp, str, &check);
+//     }
+//     if (check == 1)
+//         ((t_token *)tmp->content)->value = ((t_string *)str)->content;
+// }
+
+// t_list *expand_path(t_env *menv,t_list *tokens)
+// {
+//     t_list  *tmp;
+
+//     tmp = tokens;
+//     while (tmp && ((t_token *)tmp->content)->type != TOK_EOL)
+//     {
+//         check_expand_path(menv, tmp);
+//         tmp = tmp->next;
+//     }
+//     return (tokens);
+// }

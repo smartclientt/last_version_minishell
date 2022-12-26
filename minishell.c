@@ -40,7 +40,7 @@ t_list	*ft_lst_del_first(t_list *tokens)
 
 int main(int ac, char **av, char **env)
 {
-    char *cmd = "ls";
+    char *cmd = "\"e\"\"c\"h\'o\' hey";
     t_list *tokens;
     t_list  *cmds;
 	t_env	*menv;
@@ -50,6 +50,7 @@ int main(int ac, char **av, char **env)
 
     menv = NULL;
     tokens = NULL;
+	v_glob = (t_glob){0};
     // if (ac > 1 && av[0])
 	// {
 	// 	write(2, "minishell: too many arguments\n", 30);
@@ -66,12 +67,14 @@ int main(int ac, char **av, char **env)
 	}
     // print_list_tokens(tokens);
 	tokens = ft_lst_del_first(tokens);
-    tokens = expand_dollar(menv,tokens);
+    // tokens = expand_path(menv,tokens);
+	tokens = expand_exit_status(tokens);
     // print_list_tokens(tokens);
     cmds = get_cmds(tokens);
     // print_list(cmds);
 	printf("-----------------------------------------------\n");
     execution(&menv, cmds, ft_lstsize(cmds));
+	return(v_glob.exit_status);
 }
 
 // int main(int ac, char **av, char **env)

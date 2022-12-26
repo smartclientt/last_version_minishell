@@ -23,7 +23,7 @@
 # include <readline/history.h>
 # include "./libft/libft.h"
 
-int status;
+
 
 // tools
 int		ft_strcmp(char *s1, char *s2);
@@ -36,6 +36,13 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }			t_env;
+
+typedef struct s_glob
+{
+	int	exit_status;
+}				t_glob;
+
+t_glob		v_glob;
 
 t_env	*env_node(char *key, char *value);
 void	env_add_end(t_env **lst, t_env *new);
@@ -159,7 +166,8 @@ char	*new_word(char *str , int *i);
 char	*ft_dquote(char *str,int *i);
 char	*ft_squote(char *str,int *i);
 t_list	*get_tokens(char *str);
-t_list	*expand_dollar(t_env *menv,t_list *tokens);
+t_list	*expand_path(t_env *menv,t_list *tokens);
+t_list  *expand_exit_status(t_list *tokens);
 
 //grammar
 int		check_grammar(t_list *tokens);

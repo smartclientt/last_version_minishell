@@ -20,7 +20,9 @@ int	check_grammar(t_list *tokens)
 		prv = (t_token *)ptr->content;
 		if (check_rules(prv->type, cur->type))
 		{
-			//perror("minishell: syntax error near unexpected token `",cur->content, "'\n");
+			write(2, "minishell: syntax error near unexpected token `", 47);
+			write(2, (t_token *)cur->value, ft_strlen((const char *)((t_token *)cur->value)));
+			write(2, "'\n", 2);
 			return (0);
 		}
 		ptr = ptr->next;

@@ -125,7 +125,7 @@ t_list  *get_tokens(char *str)
         add_tokens(&tokens, str, &i);
         i++;
     }
-    ft_lstadd_back(&tokens, new_node(new_token("EOL", TOK_EOL)));
+    ft_lstadd_back(&tokens, new_node(new_token("newline", TOK_EOL)));
     ft_lstadd_front(&tokens, new_node(new_token("START", TOK_START)));
     return (tokens);
 }

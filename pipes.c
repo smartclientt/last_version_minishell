@@ -110,8 +110,8 @@ void	multi_pipes(t_env **menv, t_list *cmds, int cmd_nbr)
 		i++;
 	}
 	i = 0;
-	while (waitpid(id[i++], &status, 0) != -1);
-	if (WIFEXITED(status))
-		WEXITSTATUS(status);
-		printf("status == %d\n", status % 255);
+	while (waitpid(id[i++], &v_glob.exit_status, 0) != -1);
+	if (WIFEXITED(v_glob.exit_status))
+		WEXITSTATUS(v_glob.exit_status);
+		printf("status == %d\n", v_glob.exit_status % 255);
 }
