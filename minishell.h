@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:42 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/26 13:20:24 by yelousse         ###   ########.fr       */
+/*   Updated: 2022/12/28 03:48:19 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,52 @@ typedef struct s_glob
 }				t_glob;
 
 t_glob		v_glob;
+// parssssssssssiiiiiiiiiiing
+typedef struct s_vector
+{
+    char **content;
+    size_t size;
+}   t_vector;
+
+typedef struct s_string
+{
+    char *content;
+    size_t size;
+}   t_string;
+
+typedef enum
+{
+    TOK_START,
+	TOK_EOL,
+    TOK_WORD,
+	TOK_ROUTPUT,
+	TOK_DROUTPUT,
+	TOK_RINPUT,
+    TOK_DRINPUT,
+	TOK_SINQTE,
+	TOK_DQUOTE,
+    TOK_PIPE,
+}   e_token;
+
+typedef struct s_token
+{
+    char *value; // string_t
+    e_token type;
+}   t_token;
+
+typedef struct s_redir
+{
+    e_token type;
+    char *filepath; // string_t
+}   t_redir;
+
+typedef struct s_cmd
+{
+    char **args; // t_vector->content
+    int fdin;
+    int fdout;
+    t_list *redirs;
+}   t_cmd;
 
 t_env	*env_node(char *key, char *value);
 void	env_add_end(t_env **lst, t_env *new);
@@ -55,6 +101,8 @@ void	create_if_no_env(t_env **menv);
 void	print_env(t_env *menv);
 char	*find_value_with_key(t_env *menv, char *key);
 t_env	*find_key_node(t_env *menv, char *key);
+char	*ft_heredocs(char *file);
+void    execute_red(t_list *cmds, t_list *red, t_env **menv);
 
 // builting commands
 void	b_echo(char **arg, int fd);
@@ -105,58 +153,12 @@ char	*check_cmd_access(t_env *menv, char *cmd);
 // execution
 void	execution(t_env **menv, t_list *cmds, int cmd_nbr);
 char	*update_cmd_path(t_env *menv, char **cmds);
-
+void	execute_redirections(t_list *redir, int *fdin, int *fdout);
 // minishell loop
 void	minishell_loop(t_env **menv);
 
 
 
-// parssssssssssiiiiiiiiiiing
-typedef struct s_vector
-{
-    char **content;
-    size_t size;
-}   t_vector;
-
-typedef struct s_string
-{
-    char *content;
-    size_t size;
-}   t_string;
-
-typedef enum
-{
-    TOK_START,
-	TOK_EOL,
-    TOK_WORD,
-	TOK_ROUTPUT,
-	TOK_DROUTPUT,
-	TOK_RINPUT,
-    TOK_DRINPUT,
-	TOK_SINQTE,
-	TOK_DQUOTE,
-    TOK_PIPE,
-}   e_token;
-
-typedef struct s_token
-{
-    char *value; // string_t
-    e_token type;
-}   t_token;
-
-typedef struct s_redir
-{
-    e_token type;
-    char *filepath; // string_t
-}   t_redir;
-
-typedef struct s_cmd
-{
-    char **args; // t_vector->content
-    int fdin;
-    int fdout;
-    t_list *redirs;
-}   t_cmd;
 
 t_token	*new_token(char *value, e_token type);
 t_list	*new_node(void *content);

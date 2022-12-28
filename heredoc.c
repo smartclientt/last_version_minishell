@@ -16,31 +16,56 @@
 //     return (fd);
 // }
 
-void	ft_heredocs(const char *file)
+char	*ft_heredocs(char *file)
 {
-	t_string	*input;
-	const   char		*buffer;
-	int			pipefd[2];
+	t_string	    *input;
+	char		*buffer;
+	char *result;
+	// int			    pipefd[2];
 
-	signal(SIGQUIT, SIG_IGN);
-	input = char_vec_new();
+	input = new_string("");
 	while (1)
 	{
 		buffer = readline("> ");
 		if (!buffer || ft_strncmp(buffer, file, ft_strlen(file) + 1) == 0)
 			break ;
-        str_concate(input, buffer);
-		str_append(input, '\n');
+        input = str_concate(input, buffer);
+		input = str_append(input, '\n');
 		free(buffer);
 	}
-	if (pipe(pipefd))
-	{
-		perror("minishell");
-		exit(EXIT_FAILURE);
-	}
-	write(pipefd[1], char_vec_to_str(input), input->size);
-	dup2(pipefd[0], v_glob.g_in);
-	close(pipefd[0]);
-	close(pipefd[1]);
-	char_vec_del(&input);
+	// if (pipe(pipefd))
+	// {
+	// 	perror("minishell");
+	// 	exit(1);
+	// }
+	// write(1, ((t_string *)input)->content, input->size);
+	// dup2(pipefd[0], v_glob.g_in);
+	// close(pipefd[0]);
+	// close(pipefd[1]);
+	// free_string(&input);
+	free(file);
+	result = ((t_string *)input)->content;
+	return (result);
 }
+
+// void    check_heredoc(t_list *cmds)
+// {
+//     t_list *tmp;
+//     t_list  *red;
+
+//     tmp = cmds;
+//     while (tmp)
+//     {
+//         red = ((t_cmd *)tmp->content)->redirs;
+//         while(((t_redir *)red->content))
+//         {
+//             if(((t_redir *)red->content)->type == TOK_DRINPUT)
+//             {
+//                 ft_heredocs((const char *)((t_redir *)red->content)->filepath);
+//                 break;
+//             }
+//             red = red->next;
+//         }
+//         tmp = tmp->next;
+//     }
+// }

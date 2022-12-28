@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 09:02:47 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/26 11:16:37 by yelousse         ###   ########.fr       */
+/*   Updated: 2022/12/28 04:21:39 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	execution(t_env **menv, t_list *cmds, int cmd_nbr)
 		i++;
 	}
 	if (cmd_nbr == 1 && is_builted(((t_cmd *)cmds->content)->args))
-		exec_builted(menv, ((t_cmd *)cmds->content)->args);
+		execute_red(cmds, ((t_cmd *)cmds->content)->redirs, menv);
 	else
 		multi_pipes(menv, cmds, cmd_nbr);
 }

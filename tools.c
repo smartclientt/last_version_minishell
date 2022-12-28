@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 03:39:11 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/26 11:13:51 by yelousse         ###   ########.fr       */
+/*   Updated: 2022/12/28 01:13:41 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,20 @@ int	ft_strcmp(char *s1, char *s2)
 	}
 	return (1);
 }
+
+// int	ft_strcmp(char *s1, char *s2)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (s1[i] && s2[i])
+// 	{
+// 		if (s1[i] != s2[i])
+// 			return (s1[i] - s2[i]);
+// 		i++;
+// 	}
+// 	return (s1[i] - s2[i]);
+// }
 
 char	*ft_free(char **s)
 {

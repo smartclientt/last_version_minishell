@@ -56,6 +56,7 @@ t_list	*new_node(void *content)
 void    print_list(t_list *tokens)
 {
     t_list  *tmp;
+    t_list  *red;
     int i;
 
     tmp = tokens;
@@ -65,11 +66,16 @@ void    print_list(t_list *tokens)
         i = 0;
         while (((t_cmd *)tmp->content)->args[i] != NULL)
         {
-            printf("%s\n", ((t_cmd *)tmp->content)->args[i]);
-            if (((t_cmd *)tmp->content)->redirs->content)
-                printf("%s\n", ((t_redir *)((t_cmd *)tmp->content)->redirs->content)->filepath);
+            printf("ards===%s\n", ((t_cmd *)tmp->content)->args[i]);
+            red = ((t_cmd *)tmp->content)->redirs;
             i++;
         }
+        while (red)
+        {    
+            printf("red===%s\n", ((t_redir *)red->content)->filepath);
+            red = red->next;
+        }
+        printf("#############\n");
         //printf("value:[%s]\t type:[%d]\n",((t_token *)tmp->content)->value, ((t_token *)tmp->content)->type);
         tmp = tmp->next;
     }

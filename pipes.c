@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:16:50 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/26 01:36:26 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/28 03:54:44 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,14 @@ void	multi_pipes(t_env **menv, t_list *cmds, int cmd_nbr)
 		{
 			if (1 != cmd_nbr)
 			{
-				if (i == 0)
-					first_cmd(fd, prev_in, prev_out);
-				else if (i + 1 == cmd_nbr)
+				if (i + 1 == cmd_nbr)
 					last_cmd(fd, prev_in, prev_out);
+				else if (i == 0)
+					first_cmd(fd, prev_in, prev_out);
 				else
 					between_cmd(fd, prev_in, prev_out);
 			}
-			run_cmd(menv, ((t_cmd *)tmp->content)->args);
+			execute_red(tmp, ((t_cmd *)tmp->content)->redirs, menv);
 		}
 		close(prev_in);
 		close(prev_out);

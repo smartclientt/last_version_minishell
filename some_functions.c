@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 00:41:44 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/26 12:13:29 by yelousse         ###   ########.fr       */
+/*   Updated: 2022/12/28 03:26:33 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_list  *get_cmds(t_list *tokens)
     tmp = tokens;
     while(((t_token *)tmp->content)->type != TOK_EOL && tmp->next != NULL)
     {
-        red_list = new_node(NULL);
+        red_list = NULL;
         arg = new_vector(NULL);
         while (((t_token *)tmp->content)->type == TOK_WORD  || ((t_token *)tmp->content)->type == TOK_DQUOTE 
             || ((t_token *)tmp->content)->type == TOK_SINQTE)
@@ -60,10 +60,11 @@ t_list  *get_cmds(t_list *tokens)
         while (((t_token *)tmp->content)->type == TOK_RINPUT || ((t_token *)tmp->content)->type == TOK_ROUTPUT 
             || ((t_token *)tmp->content)->type == TOK_DRINPUT || ((t_token *)tmp->content)->type == TOK_DROUTPUT)
         {
-            // if (((t_token *)tmp->content)->type == TOK_DRINPUT)
-            //     //ft_lstadd_back(&red_list, new_node(new_red(((t_token *)tmp->next->content)->value, ((t_token *)tmp->content)->type)));
-            // else
+            if (((t_token *)tmp->content)->type == TOK_DRINPUT)
+                ft_lstadd_back(&red_list, new_node(new_red(ft_heredocs(((t_token *)tmp->next->content)->value), ((t_token *)tmp->content)->type)));
+            else
                 ft_lstadd_back(&red_list, new_node(new_red(((t_token *)tmp->next->content)->value, ((t_token *)tmp->content)->type)));
+                //printf("%s\n", (red_list->content));
             tmp = tmp->next->next;
         }
         ft_lstadd_back(&cmds, new_node(new_cmd(arg->content, red_list)));
