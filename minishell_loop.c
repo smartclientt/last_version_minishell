@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 11:23:55 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/29 01:10:13 by yelousse         ###   ########.fr       */
+/*   Updated: 2022/12/29 02:21:05 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	minishell_loop(t_env **menv)
 	
 	while(1)
 	{
+		signal(SIGINT, &signal_handler);
+		signal(SIGQUIT, SIG_IGN);
 		tokens = NULL;
 		line = NULL;
 		cmds = NULL;

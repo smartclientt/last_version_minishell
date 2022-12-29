@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 18:44:39 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/24 13:03:04 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/29 03:56:09 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ int		check_unset_args(char *arg)
 	return (0);
 }
 
-void	b_unset(t_env **menv, char **args)
+int	b_unset(t_env **menv, char **args)
 {
 	int		i;
 	t_env	*new_env;
 
 	new_env = *menv;
 	if (!args || !*args)
-		return ;
+		return (0);
 	else
 	{
 		i = 0;
@@ -78,4 +78,5 @@ void	b_unset(t_env **menv, char **args)
 		}
 	}
 	*menv = new_env;
+	return (0);
 }

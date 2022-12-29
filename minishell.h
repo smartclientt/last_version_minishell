@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:42 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/28 03:48:19 by yelousse         ###   ########.fr       */
+/*   Updated: 2022/12/29 04:11:51 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,22 +102,23 @@ void	print_env(t_env *menv);
 char	*find_value_with_key(t_env *menv, char *key);
 t_env	*find_key_node(t_env *menv, char *key);
 char	*ft_heredocs(char *file);
-void    execute_red(t_list *cmds, t_list *red, t_env **menv);
+int		execute_red(t_list *cmds, t_list *red, t_env **menv);
 
 // builting commands
-void	b_echo(char **arg, int fd);
+int		b_echo(char **arg, int fd);
 int		is_option(char *op);
 
-void	b_cd(t_env **menv, char *path);
-void	cd_home(t_env **menv);
+int		b_cd(t_env **menv, char *path);
+int		cd_home(t_env **menv);
+int		cd_oldpwd(t_env **menv);
 void	new_pwd_and_oldpwd(t_env **menv);
 void	add_oldpwd_to_env(t_env **menv, t_env *pwd);
 void	add_pwd_to_env(t_env **menv);
 
 int		is_builted(char **args);
-void	exec_builted(t_env **menv, char **args);
+int		exec_builted(t_env **menv, char **args);
 
-void	b_export(t_env **menv, char **args);
+int		b_export(t_env **menv, char **args);
 int		cmp_key(char *s1, char *s2);
 int		env_size(t_env *lst);
 char	**key_env_to_array(t_env *menv);
@@ -127,12 +128,12 @@ char	**sorted_array(char **array);
 t_env	*print_sorted_env(t_env *menv);
 int		check_export_args(char *arg);
 
-void	b_unset(t_env **menv, char **args);
+int		b_unset(t_env **menv, char **args);
 t_env	*remove_node(t_env *menv, char *key);
 
-void	b_env(t_env *menv, char **args);
+int		b_env(t_env *menv, char **args);
 
-void	b_pwd(t_env	*menv);
+int		b_pwd(t_env	*menv);
 
 // error case
 void	error_msg(const char *error_msg);
@@ -142,7 +143,7 @@ void	multi_pipes(t_env **menv, t_list *cmds, int cmd_nbr);
 void	first_cmd(int fd[2], int prev_in, int prev_out);
 void	between_cmd(int fd[2], int prev_in, int prev_out);
 void	last_cmd(int fd[2], int prev_in, int prev_out);
-void	run_cmd(t_env **menv, char **cmd);
+int		run_cmd(t_env **menv, char **cmd);
 
 // check cmds if valid
 int		check_access_path(char *path);
@@ -156,6 +157,9 @@ char	*update_cmd_path(t_env *menv, char **cmds);
 void	execute_redirections(t_list *redir, int *fdin, int *fdout);
 // minishell loop
 void	minishell_loop(t_env **menv);
+
+// signals
+void	signal_handler(int sig);
 
 
 

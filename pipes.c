@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:16:50 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/29 01:09:32 by yelousse         ###   ########.fr       */
+/*   Updated: 2022/12/29 04:15:58 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,21 @@ void	last_cmd(int fd[2], int prev_in, int prev_out)
 	close(prev_in);
 }
 
-void	run_cmd(t_env **menv, char **cmd)
+int	run_cmd(t_env **menv, char **cmd)
 {
 	int	checker;
+	int	id;
+	int	status;
 
+	status = 0;
 	if (is_builted(cmd))
-		exec_builted(menv, cmd);
+		return (exec_builted(menv, cmd));
 	else
 	{
-		if(fork() == 0)
+		id = fork();
+		if(id == 0)
 		{
+			signal(SIGQUIT, SIG_DFL);
 			checker = check_access_path(cmd[0]);
 			if (checker == 1)
 			{
@@ -66,8 +71,11 @@ void	run_cmd(t_env **menv, char **cmd)
 			else if (checker == 0 || checker == -2)
 				exit(127);
 		}
-		wait(0);
+		waitpid(id, &status, 0);
+		if (WIFEXITED(status))
+			WEXITSTATUS(status);
 	}
+	return (status % 255);
 }
 
 void	multi_pipes(t_env **menv, t_list *cmds, int cmd_nbr)
@@ -103,8 +111,7 @@ void	multi_pipes(t_env **menv, t_list *cmds, int cmd_nbr)
 				else
 					between_cmd(fd, prev_in, prev_out);
 			}
-			execute_red(tmp, ((t_cmd *)tmp->content)->redirs, menv);
-			exit(0);
+			exit(execute_red(tmp, ((t_cmd *)tmp->content)->redirs, menv));
 		}
 		close(prev_in);
 		close(prev_out);
@@ -115,5 +122,5 @@ void	multi_pipes(t_env **menv, t_list *cmds, int cmd_nbr)
 	while (waitpid(id[i++], &v_glob.exit_status, 0) != -1);
 	if (WIFEXITED(v_glob.exit_status))
 		WEXITSTATUS(v_glob.exit_status);
-		printf("status == %d\n", v_glob.exit_status % 255);
+	printf("status == %d\n", v_glob.exit_status % 255);
 }

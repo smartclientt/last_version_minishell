@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/20 04:21:36 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/22 17:41:13 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/29 04:13:45 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	new_pwd_and_oldpwd(t_env **menv)
 	}
 }
 
-void	cd_home(t_env **menv)
+int		cd_home(t_env **menv)
 {
 	char	*home;
 
@@ -58,10 +58,14 @@ void	cd_home(t_env **menv)
 	else if (chdir(home) == -1)
 		perror("minishell: cd: ");
 	else
+	{
 		new_pwd_and_oldpwd(menv);
+		return (0);
+	}
+	return (1);
 }
 
-void	cd_oldpwd(t_env **menv)
+int	cd_oldpwd(t_env **menv)
 {
 	char	*oldpwd;
 
@@ -73,24 +77,35 @@ void	cd_oldpwd(t_env **menv)
 		if (chdir(oldpwd) == -1)
 			perror("minishell: cd: ");
 		else
+		{
 			new_pwd_and_oldpwd(menv);
+			return (0);
+		}
 	}
+	return (1);
 }
 
-void	b_cd(t_env **menv, char *path)
+int	b_cd(t_env **menv, char *path)
 {
 	if (!path || ft_strcmp("~", path))
-		cd_home(menv);
+		return (cd_home(menv));
 	else
 	{
 		if (ft_strcmp("-", path))
-			cd_oldpwd(menv);
+			return (cd_oldpwd(menv));
 		else
 		{
 			if (chdir(path) == -1)
+			{
 				perror("minishell: cd: ");
+				return (1);
+			}
 			else
+			{
 				new_pwd_and_oldpwd(menv);
+				return (0);
+			}
 		}
 	}
+	return (1);
 }

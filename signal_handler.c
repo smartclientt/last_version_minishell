@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   b_pwd.c                                            :+:      :+:    :+:   */
+/*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 15:21:22 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/29 03:52:58 by shbi             ###   ########.fr       */
+/*   Created: 2022/12/27 11:51:27 by shbi              #+#    #+#             */
+/*   Updated: 2022/12/27 23:29:36 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		b_pwd(t_env	*menv)
+void signal_handler(int sig)
 {
-	t_env	*pwd_node;
-	char	pwd[PATH_MAX];
-
-	pwd_node = find_key_node(menv, ft_strdup("PWD"));
-	if (!pwd_node)
-		printf("%s\n", getcwd(pwd, sizeof(pwd)));
-	else
-		printf("%s\n", pwd_node->value);
-	return (0);
+	if (sig == SIGINT)
+	{
+		ft_putstr_fd("\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }

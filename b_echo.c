@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_echo.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 05:30:56 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/29 00:55:31 by yelousse         ###   ########.fr       */
+/*   Updated: 2022/12/29 03:55:31 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	is_option(char *op)
 	return (op[0] == '-' && op[1] == 'n');
 }
 
-void	b_echo(char **arg, int fd)
+int	b_echo(char **arg, int fd)
 {
 	int	i;
 
@@ -50,5 +50,6 @@ void	b_echo(char **arg, int fd)
 		if (is_option(arg[0]) == 0)
 			ft_putchar_fd('\n', fd);
 	}
+	return (0);
 }
 
