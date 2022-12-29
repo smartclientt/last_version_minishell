@@ -25,12 +25,12 @@ char *get_kw(t_env *menv,char *str,int *i)
     while(str[(*i)] && str[(*i)] != ' ')
     {
         dst = str_append(dst, str[(*i)]);
-        if (find_value_with_key(menv, dst->content) != NULL)
-        {
-            value = find_value_with_key(menv, dst->content);
-            return (value);
-        }
         (*i)++;
+    }
+    if (find_value_with_key(menv, dst->content) != NULL)
+    {
+        value = find_value_with_key(menv, dst->content);
+        return (value);
     }
     return (NULL);
 }

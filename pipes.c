@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:16:50 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/28 03:54:44 by yelousse         ###   ########.fr       */
+/*   Updated: 2022/12/29 01:09:32 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,23 @@ void	run_cmd(t_env **menv, char **cmd)
 	int	checker;
 
 	if (is_builted(cmd))
-	{
 		exec_builted(menv, cmd);
-		exit(0);
-	}
 	else
 	{
-		checker = check_access_path(cmd[0]);
-		if (checker == 1)
+		if(fork() == 0)
 		{
-			if (execve(cmd[0], cmd, env_to_array(*menv)) == -1)
-				perror("minishell");
+			checker = check_access_path(cmd[0]);
+			if (checker == 1)
+			{
+				if (execve(cmd[0], cmd, env_to_array(*menv)) == -1)
+					perror("minishell");
+			}
+			else if (checker == -1 || checker == -3)
+				exit(126);
+			else if (checker == 0 || checker == -2)
+				exit(127);
 		}
-		else if (checker == -1 || checker == -3)
-			exit(126);
-		else if (checker == 0 || checker == -2)
-			exit(127);
+		wait(0);
 	}
 }
 
@@ -103,6 +104,7 @@ void	multi_pipes(t_env **menv, t_list *cmds, int cmd_nbr)
 					between_cmd(fd, prev_in, prev_out);
 			}
 			execute_red(tmp, ((t_cmd *)tmp->content)->redirs, menv);
+			exit(0);
 		}
 		close(prev_in);
 		close(prev_out);
