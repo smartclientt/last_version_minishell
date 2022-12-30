@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:40 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/26 12:23:24 by yelousse         ###   ########.fr       */
+/*   Updated: 2022/12/30 16:38:51 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
-	t_env *menv;
+	t_env	*menv;
 
 	if (ac > 1 && av[0])
 	{
@@ -49,7 +49,6 @@ t_list	*ft_lst_del_first(t_list *tokens)
 // 	t_env	*menv;
 // 	(void)ac;
 // 	(void)av;
-
 
 //     menv = NULL;
 //     tokens = NULL;

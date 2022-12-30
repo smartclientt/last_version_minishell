@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:41:38 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/30 00:33:06 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/30 17:32:18 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,40 +70,44 @@ int	cmd_is_path(char *cmd)
 	return (0);
 }
 
-char	*check_cmd_access(t_env *menv, char *cmd)
+char	*cmd_is_not_path(t_env *menv, char *cmd)
 {
 	char	**path_env;
 	char	*first_cmd;
 	char	*path;
 	int		i;
 
+	path_env = ft_split(find_value_with_key(menv, "PATH"), ':');
+	first_cmd = ft_strjoin("/", cmd);
+	i = 0;
+	while (path_env[i])
+	{
+		path = ft_strjoin(path_env[i], first_cmd);
+		if (check_access_path(path) == 1)
+		{
+			free(first_cmd);
+			free_path_env(path_env);
+			return (path);
+		}
+		free(path);
+		i++;
+	}
+	free(first_cmd);
+	free_path_env(path_env);
+	ft_printf(2, "minishell: %s: command not found\n", cmd);
+	return (cmd);
+}
+
+char	*check_cmd_access(t_env *menv, char *cmd)
+{
 	if (!find_key_node(menv, ft_strdup("PATH")))
 		ft_printf(2, "minishell: %s: command not found\n", cmd);
-	else if(!*cmd)
+	else if (!*cmd)
 		ft_printf(2, "minishell: %s: permession denied\n", cmd);
 	else if (is_builted(&cmd))
 		;
 	else if (!cmd_is_path(cmd))
-	{
-		path_env = ft_split(find_value_with_key(menv, "PATH"), ':');
-		first_cmd = ft_strjoin("/", cmd);
-		i = 0;
-		while (path_env[i])
-		{
-			path = ft_strjoin(path_env[i], first_cmd);
-			if (check_access_path(path) == 1)
-			{
-				free(first_cmd);
-				free_path_env(path_env);
-				return (path);
-			}
-			free(path);
-			i++;
-		}
-		free(first_cmd);
-		free_path_env(path_env);
-		ft_printf(2, "minishell: %s: command not found\n", cmd);
-	}
+		return (cmd_is_not_path(menv, cmd));
 	else
 	{
 		if (check_access_path(cmd) == 1)

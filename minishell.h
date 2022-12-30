@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:42 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/29 22:29:09 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/30 22:26:36 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,15 @@ typedef struct s_cmd
     t_list *redirs;
 }   t_cmd;
 
+typedef struct s_tools
+{
+	int	prev_in;
+	int	prev_out;
+	int	cmd_nbr;
+	int	id[100000];
+	int	fd[2];
+}	t_tools;
+
 t_env	*env_node(char *key, char *value);
 void	env_add_end(t_env **lst, t_env *new);
 char	*get_key(char *env);
@@ -120,6 +129,7 @@ int		is_builted(char **args);
 int		exec_builted(t_env **menv, char **args);
 
 int		b_export(t_env **menv, char **args);
+void	new_env_value(t_env **menv, char *key, char *new_value);
 int		cmp_key(char *s1, char *s2);
 int		env_size(t_env *lst);
 char	**key_env_to_array(t_env *menv);
@@ -145,6 +155,10 @@ void	first_cmd(int fd[2], int prev_in, int prev_out);
 void	between_cmd(int fd[2], int prev_in, int prev_out);
 void	last_cmd(int fd[2], int prev_in, int prev_out);
 int		run_cmd(t_env **menv, char **cmd);
+void	pipe_logic(t_env **menv, t_list *tmp, t_tools *tools, int i);
+int		exec_no_builted(t_env **menv, char **cmd);
+void	init_tools_variables(t_tools *tools, int cmd_nbr);
+void	wait_exit_status(t_tools *tools);
 
 // check cmds if valid
 int		check_access_path(char *path);
@@ -155,15 +169,17 @@ char	*check_cmd_access(t_env *menv, char *cmd);
 // execution
 void	execution(t_env **menv, t_list *cmds, int cmd_nbr);
 char	*update_cmd_path(t_env *menv, char **cmds);
+
 void	execute_redirections(t_list *redir, int *fdin, int *fdout);
+void	one_red_input(t_list *cmds, t_list *red, t_env **menv);
+void	double_red_input(t_list *cmds, t_list *red, t_env **menv);
+void	one_red_output(t_list *cmds, t_list *red, t_env **menv);
+void	double_red_output(t_list *cmds, t_list *red, t_env **menv);
 // minishell loop
 void	minishell_loop(t_env **menv);
 
 // signals
 void	signal_handler(int sig);
-
-
-
 
 t_token	*new_token(char *value, e_token type);
 t_list	*new_node(void *content);
@@ -176,14 +192,13 @@ char	*ft_dquote(char *str,int *i);
 char	*ft_squote(char *str,int *i);
 t_list	*get_tokens(char *str);
 t_list	*expand_path(t_env *menv,t_list *tokens);
-t_list  *expand_exit_status(t_list *tokens);
+t_list	*expand_exit_status(t_list *tokens);
 t_list	*ft_lst_del_first(t_list *tokens);
 
 //grammar
 int		check_grammar(t_list *tokens);
 
 //vector
-
 
 t_vector *new_vector(const char *str);
 t_vector *vec_append(t_vector *vec, const char *str);

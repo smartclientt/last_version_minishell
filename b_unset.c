@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 18:44:39 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/30 01:36:59 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/30 17:12:19 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_env	*remove_node(t_env *menv, char *key)
 	return (new_env);
 }
 
-int		check_unset_args(char *arg)
+int	check_unset_args(char *arg)
 {
 	int	i;
 
@@ -69,19 +69,19 @@ int	b_unset(t_env **menv, char **args)
 		return (0);
 	else
 	{
-		i = 0;
-		while (args[i])
+		i = -1;
+		while (args[++i])
 		{
 			if (!find_key_node(new_env, ft_strdup(args[i])))
 			{
-				if (check_unset_args(args[i]) == 0 || check_unset_args(args[i]) == 2)
-				{
-					ft_printf(2, "minishell: export: `%s': not a valid identifier\n", args[i]);
-				}
+				if (check_unset_args(args[i]) == 0
+					|| check_unset_args(args[i]) == 2)
+					ft_printf(2,
+						"minishell: export: `%s': not a valid identifier\n",
+						args[i]);
 			}
 			else if (find_key_node(new_env, ft_strdup(args[i])))
 				new_env = remove_node(new_env, ft_strdup(args[i]));
-			i++;
 		}
 	}
 	*menv = new_env;

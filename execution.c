@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 09:02:47 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/30 00:27:50 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/30 18:50:14 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,22 @@ char	*update_cmd_path(t_env *menv, char **cmds)
 {
 	char	*new_path;
 
-	new_path =  check_cmd_access(menv, cmds[0]);
+	new_path = check_cmd_access(menv, cmds[0]);
 	return (new_path);
 }
 
 void	execution(t_env **menv, t_list *cmds, int cmd_nbr)
 {
-	int	i;
-	t_list *tmp;
+	int		i;
+	t_list	*tmp;
 
 	i = 0;
 	tmp = cmds;
 	while (i < cmd_nbr)
 	{
 		if (!is_builted(((t_cmd *)tmp->content)->args))
-			((t_cmd *)tmp->content)->args[0] = update_cmd_path(*menv, ((t_cmd *)tmp->content)->args);
+			((t_cmd *)tmp->content)->args[0]
+				= update_cmd_path(*menv, ((t_cmd *)tmp->content)->args);
 		tmp = tmp->next;
 		i++;
 	}

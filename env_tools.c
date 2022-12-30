@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 05:45:34 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/23 18:52:40 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/30 17:47:47 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 t_env	*env_node(char *key, char *value)
 {
-	t_env	*new_node = NULL;
+	t_env	*new_node;
 
+	new_node = NULL;
 	new_node = (t_env *)malloc(sizeof(t_env));
 	if (!new_node)
 		return (NULL);
