@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:27:01 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/29 03:53:31 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/29 22:39:17 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	b_env(t_env *menv, char **args)
 {
 	if (*args)
 	{
-		error_msg(": No such file or directory\n");
+		ft_printf(2, "minishell: env: No such file or directory\n");
 		return (1);
 	}
 	else

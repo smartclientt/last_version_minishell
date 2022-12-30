@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:49:18 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/29 03:51:11 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/30 01:44:26 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ int		check_export_args(char *arg)
 	}
 	return (0);
 }
-
+	
 int	b_export(t_env **menv, char **args)
 {
 	int	i;
@@ -187,13 +187,10 @@ int	b_export(t_env **menv, char **args)
 		i = 0;
 		while (args[i])
 		{
-			if (args[i][0] == '\0')
+			if (check_export_args(args[i]) == 0)
 			{
-				ft_putstr_fd("export: not valid in this context:\n", 2);
-				return (1);
+				ft_printf(2, "minishell: export: `%s': not a valid identifier\n", args[i]);
 			}
-			else if (check_export_args(args[i]) == 0)
-				return (1);
 			else if (check_export_args(args[i]) == 1
 				&& !find_key_node(*menv, get_key(args[i])))
 				env_add_end(menv, env_node(ft_strdup(args[i]),

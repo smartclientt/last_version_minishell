@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:16:50 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/29 04:15:58 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/29 23:40:51 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	run_cmd(t_env **menv, char **cmd)
 			if (checker == 1)
 			{
 				if (execve(cmd[0], cmd, env_to_array(*menv)) == -1)
-					perror("minishell");
+					perror("minishell: ");
 			}
 			else if (checker == -1 || checker == -3)
 				exit(126);

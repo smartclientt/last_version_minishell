@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/20 04:21:36 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/29 04:13:45 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/29 22:27:23 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		cd_home(t_env **menv)
 
 	home = find_value_with_key(*menv, "HOME");
 	if (!home)
-		error_msg("cd: HOME not set\n");
+		ft_printf(2, "minishell: cd: HOME not set\n");
 	else if (chdir(home) == -1)
 		perror("minishell: cd: ");
 	else
@@ -71,7 +71,7 @@ int	cd_oldpwd(t_env **menv)
 
 	oldpwd = find_value_with_key(*menv, "OLDPWD");
 	if (!oldpwd)
-		error_msg("cd: OLDPWD not set\n");
+		ft_printf(2, "minishell: cd: OLDPWD not set\n");
 	else
 	{
 		if (chdir(oldpwd) == -1)
@@ -85,6 +85,8 @@ int	cd_oldpwd(t_env **menv)
 	return (1);
 }
 
+
+
 int	b_cd(t_env **menv, char *path)
 {
 	if (!path || ft_strcmp("~", path))
@@ -95,6 +97,10 @@ int	b_cd(t_env **menv, char *path)
 			return (cd_oldpwd(menv));
 		else
 		{
+			if (getcwd(NULL, 0) == NULL) {
+				cd_home(menv);
+				return (1);
+			}
 			if (chdir(path) == -1)
 			{
 				perror("minishell: cd: ");

@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:48:49 by shbi              #+#    #+#             */
-/*   Updated: 2022/11/30 13:17:23 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/30 01:48:50 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	create_if_no_env(t_env **menv)
 	char *tmp;
 
 	tmp = getcwd(NULL, 0);
-	env_add_end(menv, env_node("PATH","/usr/bin:/bin:/usr/sbin:/sbin"));
-	env_add_end(menv, env_node("PWD", tmp));
-	env_add_end(menv, env_node("SHLVL","0"));
+	env_add_end(menv, env_node(ft_strdup("PATH"),ft_strdup("/usr/bin:/bin:/usr/sbin:/sbin")));
+	env_add_end(menv, env_node(ft_strdup("PWD"), tmp));
+	env_add_end(menv, env_node(ft_strdup("SHLVL"),ft_strdup("0")));
 }
 
 void	print_env(t_env *menv)

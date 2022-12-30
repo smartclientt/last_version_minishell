@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:41:38 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/22 19:12:55 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/30 00:33:06 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ if the cmd is a simple cmd
 
 int	check_access_path(char *path)
 {
-	if (!*path)
+	if (!path || !*path)
 		return (-3);
 	else if (!cmd_is_path(path))
 		return (-2);
@@ -77,8 +77,10 @@ char	*check_cmd_access(t_env *menv, char *cmd)
 	char	*path;
 	int		i;
 
-	if(!*cmd)
-		error_msg(": permissiom denied: \n");
+	if (!find_key_node(menv, ft_strdup("PATH")))
+		ft_printf(2, "minishell: %s: command not found\n", cmd);
+	else if(!*cmd)
+		ft_printf(2, "minishell: %s: permession denied\n", cmd);
 	else if (is_builted(&cmd))
 		;
 	else if (!cmd_is_path(cmd))
@@ -100,16 +102,16 @@ char	*check_cmd_access(t_env *menv, char *cmd)
 		}
 		free(first_cmd);
 		free_path_env(path_env);
-		error_msg(": command not found: \n");
+		ft_printf(2, "minishell: %s: command not found\n", cmd);
 	}
 	else
 	{
 		if (check_access_path(cmd) == 1)
 			return (cmd);
 		else if (check_access_path(cmd) == -1)
-			error_msg(": permession denied\n");
+			ft_printf(2, "minishell: %s: permession denied\n", cmd);
 		else if (check_access_path(cmd) == 0)
-			error_msg(": No such file or directory\n");
+			ft_printf(2, "minishell: %s: No such file or directory\n", cmd);
 	}
 	return (cmd);
 }

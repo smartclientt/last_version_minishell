@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 18:44:39 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/29 03:56:09 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/30 01:36:59 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,14 @@ int	b_unset(t_env **menv, char **args)
 		i = 0;
 		while (args[i])
 		{
-			if (find_key_node(new_env, ft_strdup(args[i])))
+			if (!find_key_node(new_env, ft_strdup(args[i])))
+			{
+				if (check_unset_args(args[i]) == 0 || check_unset_args(args[i]) == 2)
+				{
+					ft_printf(2, "minishell: export: `%s': not a valid identifier\n", args[i]);
+				}
+			}
+			else if (find_key_node(new_env, ft_strdup(args[i])))
 				new_env = remove_node(new_env, ft_strdup(args[i]));
 			i++;
 		}

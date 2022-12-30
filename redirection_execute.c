@@ -2,6 +2,8 @@
 
 int    execute_red(t_list *cmds, t_list *red, t_env **menv)
 {
+	puts("10");
+	printf("%p\n", ((t_redir *)red->content)->filepath);
     if (!red)
         return (v_glob.exit_status = run_cmd(menv, ((t_cmd *)cmds->content)->args));
     if (((t_redir *)red->content)->type == TOK_RINPUT)
@@ -27,8 +29,8 @@ int    execute_red(t_list *cmds, t_list *red, t_env **menv)
         ft_putstr_fd(((t_redir *)red->content)->filepath,fd[1]);
         dup2(fd[0], 0);
         execute_red(cmds,red->next, menv);
-        close(fd[0]);
         dup2(backup, 0);
+        close(fd[0]);
     }
     else if(((t_redir *)red->content)->type == TOK_ROUTPUT)
     {

@@ -6,7 +6,7 @@
 #    By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/18 01:50:38 by shbi              #+#    #+#              #
-#    Updated: 2022/12/29 02:26:34 by shbi             ###   ########.fr        #
+#    Updated: 2022/12/29 22:22:33 by shbi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,9 @@ SRCS		=	minishell.c														\
 OBJS		=	$(SRCS:.c=.o)
 HEADR		=	minishell.h
 LIBFT		=	./libft/libft.a
+PRINTF		=	./ft_printf/libftprintf.a
 PATH_LIBFT	=	./libft
+PATH_PRINTF	=	./ft_printf
 CC			=	cc
 FLAGS		=	-Wall -Werror -Wextra -g
 LDFLAGS		=	-lreadline
@@ -34,15 +36,18 @@ all			:	$(NAME)
 				$(RM) $(OBJS)
 $(LIBFT)	:
 				@make bonus -C $(PATH_LIBFT)
-$(NAME)		:	$(OBJS) $(LIBFT)
-				$(CC) $(FLAGS) $(LDFLAGS) $(LDFLAGSS) -o $(NAME) $(OBJS) $(LIBFT)
+				@make -C $(PATH_PRINTF)
+$(NAME)		:	$(OBJS) $(LIBFT) $(PRINTF)
+				$(CC) $(FLAGS) $(LDFLAGS) $(LDFLAGSS) -o $(NAME) $(OBJS) $(LIBFT) $(PRINTF)
 %.o			:	%.c $(HEADR)
 				$(CC) $(FLAGS) $(CPPFLAGS) -c $< -o $@
 clean		:
 				$(RM) $(OBJS)
 				@make clean -C $(PATH_LIBFT)
+				@make clean -C $(PATH_PRINTF)
 fclean		:	clean
 				$(RM) $(NAME)
 				@make fclean -C $(PATH_LIBFT)
+				@make fclean -C $(PATH_PRINTF)
 re			:	fclean all
 				
