@@ -2,8 +2,6 @@
 
 int    execute_red(t_list *cmds, t_list *red, t_env **menv)
 {
-	puts("10");
-	printf("%p\n", ((t_redir *)red->content)->filepath);
     if (!red)
         return (v_glob.exit_status = run_cmd(menv, ((t_cmd *)cmds->content)->args));
     if (((t_redir *)red->content)->type == TOK_RINPUT)
