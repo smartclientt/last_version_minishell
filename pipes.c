@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:16:50 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/30 22:31:53 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/31 20:10:19 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ void	multi_pipes(t_env **menv, t_list *cmds, int cmd_nbr)
 	t_list	*tmp;
 	int		i;
 
-	tmp = cmds;	i = -1;
+	tmp = cmds;
+	i = -1;
 	init_tools_variables(&tools, cmd_nbr);
 	while (++i < tools.cmd_nbr)
 	{

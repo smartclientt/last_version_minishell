@@ -14,7 +14,6 @@ t_token *new_token(char *value, e_token type)
         return (NULL);
     len = (ft_strlen(value) + 1);
     ft_memmove(token->value, value, len);
-	
     return (token);
 }
 

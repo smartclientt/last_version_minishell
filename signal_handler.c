@@ -6,13 +6,13 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 11:51:27 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/27 23:29:36 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/30 22:52:54 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void signal_handler(int sig)
+void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{

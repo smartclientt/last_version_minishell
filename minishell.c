@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:40 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/30 16:38:51 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/31 22:22:39 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	main(int ac, char **av, char **env)
 	}
 	fill_env(&menv, env);
 	minishell_loop(&menv);
+	free_env(menv);
+	return (0);
 }
 
 t_list	*ft_lst_del_first(t_list *tokens)

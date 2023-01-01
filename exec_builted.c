@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:29:55 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/30 18:50:09 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/31 22:26:03 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ int	exec_builted(t_env **menv, char **args)
 	else if (ft_strcmp(args[0], "pwd"))
 		return (b_pwd(*menv));
 	else if (ft_strcmp(args[0], "exit"))
-		return (0);
-	return (0);
+		b_exit(args + 1, *menv);
+	return (1);
 }

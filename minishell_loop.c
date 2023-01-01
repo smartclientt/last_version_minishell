@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 11:23:55 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/30 16:18:01 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/31 23:08:19 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	minishell_loop(t_env **menv)
 	char	*line;
 	t_list	*tokens;
     t_list	*cmds;
-	
 	while(1)
 	{
 		signal(SIGINT, &signal_handler);
@@ -26,13 +25,16 @@ void	minishell_loop(t_env **menv)
 		tokens = NULL;
 		line = NULL;
 		cmds = NULL;
-        v_glob.exit_status = 0;
+        // v_glob.exit_status = 0;
         v_glob.g_in = 0;
         v_glob.g_out = 1;
 		//0
 		line = readline("minishell-$ ");
-		if (!ft_strncmp("exit", line, 5))
-			exit(0);
+		// if (!ft_strncmp("exit", line, 5))
+		// {
+		// 	ft_printf(1, "exit\n");
+		// 	b_exit(NULL);
+		// }
 		add_history(line);
 		//1
 		tokens = get_tokens(line);

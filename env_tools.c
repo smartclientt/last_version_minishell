@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 05:45:34 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/30 17:47:47 by shbi             ###   ########.fr       */
+/*   Updated: 2022/12/30 22:34:03 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ void	fill_env(t_env **menv, char **env)
 {
 	int		i;
 
-	i = 0;
 	if (!*env || !env)
 		create_if_no_env(menv);
 	else
 	{
+		i = 0;
 		while (env[i])
 		{
 			env_add_end(menv, env_node(get_key(env[i]), get_value(env[i])));
