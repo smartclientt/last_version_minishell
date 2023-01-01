@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 11:23:55 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/31 23:08:19 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/01 01:18:41 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	minishell_loop(t_env **menv)
 		tokens = NULL;
 		line = NULL;
 		cmds = NULL;
-        // v_glob.exit_status = 0;
+        v_glob.exit_status = 0;
         v_glob.g_in = 0;
         v_glob.g_out = 1;
 		//0

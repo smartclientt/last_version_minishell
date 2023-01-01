@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 22:38:59 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/31 22:29:39 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/01 01:18:24 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ void	b_exit(char **args, t_env *menv)
 	}
 	v_glob.exit_status = exit_status;
 	//neeed to free env and cmds and readline;
-	rl_clear_history();
-	system("leaks minishell");
 	free_env(menv);
 	exit(exit_status);
 }
