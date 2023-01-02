@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 11:23:55 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/02 05:31:33 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/02 06:26:35 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	minishell_loop(t_env **menv)
 		tokens = NULL;
 		line = NULL;
 		cmds = NULL;
-		printf("status == %d\n", v_glob.exit_status % 255);
 		line = readline("minishell-$ ");
 		if (!line)
 		{
@@ -35,19 +34,20 @@ void	minishell_loop(t_env **menv)
 		add_history(line);
 		tokens = get_tokens(line, *menv);
         tokens = ft_lst_del_first(tokens);
+		print_list_tokens(tokens);
 		if (!tokens || !check_grammar(tokens))
 		{
-			//lst_del(&token_lst, token_del);
 			v_glob.exit_status = 258;
-			return ;
+		//lst_del(&token_lst, token_del);
 		}
-		// tokens = expand_path(*menv,tokens);
-        // print_list_tokens(tokens);
-		cmds = get_cmds(tokens);
-        // print_list(cmds);
-		execution(menv, cmds, ft_lstsize(cmds));
-		free(line);
-		free(tokens);
-		free(cmds);
+		// else
+		{
+			cmds = get_cmds(tokens);
+			print_list(cmds);
+			execution(menv, cmds, ft_lstsize(cmds));
+			free(line);
+			free(tokens);
+			free(cmds);
+		}
 	}
 }

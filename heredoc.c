@@ -28,13 +28,13 @@ char	*ft_heredocs(char *file)
 	char		*result;
 
 	input = new_string("");
-	signal(SIGINT, SIG_IGN);
+	// signal(SIGINT, SIG_IGN);
 	if (fork() == 0)
 	{
 		while (1)
 		{
-			signal(SIGINT, exit_herdoc);
-			signal(SIGQUIT, SIG_IGN);
+			// signal(SIGINT, exit_herdoc);
+			// signal(SIGQUIT, SIG_IGN);
 			buffer = readline("> ");
 			if (!buffer || ft_strncmp(buffer, file, ft_strlen(file) + 1) == 0)
 				break ;
