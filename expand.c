@@ -5,6 +5,8 @@ int find_dollar(char *str)
     int i;
 
     i = 0;
+    if (str == NULL)
+        return (0);
     while(str[i])
     {
         if (str[i] == '$')
@@ -14,15 +16,16 @@ int find_dollar(char *str)
     return (0);
 }
 
-char *get_kw(t_env *menv,char *str,int *i)
+char *get_kw_dq(t_env *menv,char *str,int *i)
 {
     t_string *dst;
     char *value;
 
     value = NULL;
+    v_glob.g_expand_dq = 0;
     dst = new_string("");
     (*i)++;
-    while(str[(*i)] && str[(*i)] != ' ')
+    while(str[(*i)] && ft_isalnum(str[(*i)]))
     {
         dst = str_append(dst, str[(*i)]);
         (*i)++;
@@ -35,54 +38,98 @@ char *get_kw(t_env *menv,char *str,int *i)
     return (NULL);
 }
 
-t_list *expand_path(t_env *menv,t_list *tokens)
+char *get_kw(t_env *menv,char *str,int *i)
 {
-    t_list  *tmp;
+    t_string *dst;
+    char *value;
+
+    value = NULL;
+    dst = new_string("");
+    (*i)++;
+    while(str[(*i)] && str[(*i)] != ' ' && str[(*i)] != '\'')
+    {
+        dst = str_append(dst, str[(*i)]);
+        (*i)++;
+    }
+    if (find_value_with_key(menv, dst->content) != NULL)
+    {
+        value = find_value_with_key(menv, dst->content);
+        return (value);
+    }
+    return (NULL);
+}
+
+t_string *expand_path_dq(t_env *menv,t_string *dst)
+{
     char	*word;
     int     i;
     t_string *key;
-    t_string *str;
+    t_string *str = NULL;
+
+    i = 0;
+	key = new_string(NULL);
+    str = new_string("");
+    word = ((t_string *)dst)->content;
+    while(word[i] != '\0' && i < (int)((t_string *)dst)->size)
+    {
+        if (word[i]== '$')
+        {
+            key->content = get_kw_dq(menv, word, &i);
+            if(key->content == NULL)
+                return (free_string(&str), dst);
+            str = str_concate(str, ((const char *)key->content));
+            if (word[i] == '\'')
+                str = str_concate(str, "'");
+        }
+        else
+            str = str_append(str, word[i]);
+        i++;
+    }
+    return (str);
+}
+
+t_string *expand_path(t_env *menv,t_string *dst)
+{
+    char	*word;
+    int     i;
+    t_string *key;
+    t_string *str = NULL;
+    char *old_str = NULL;
     int check = 0;
 
     i = 0;
-    tmp = tokens;
 	key = new_string(NULL);
-    while (tmp && ((t_token *)tmp->content)->type != TOK_EOL)
+    if (find_dollar(((t_string *)dst)->content) == 1)
     {
-        if ((((t_token *)tmp->content)->type == TOK_WORD || ((t_token *)tmp->content)->type == TOK_DQUOTE) && find_dollar(((t_token *)tmp->content)->value))
+        str = new_string("");
+        word = ((t_string *)dst)->content;
+        old_str = ((t_string *)dst)->content;
+        while(word[i] != '\0' && i < (int)((t_string *)dst)->size)
         {
-            str = new_string("");
-            word = ((t_token *)tmp->content)->value;
-            while(word[i] != '\0')
+            if (word[i]== '$')
             {
-                if (word[i]== '$')
+                check = 1;
+                key->content = get_kw(menv, word, &i);
+                if(key->content == NULL)
                 {
-                    check = 1;
-                    key->content = get_kw(menv,word, &i);
-                    if(key->content == NULL)
-                        return (free_string(&str) , tokens);
-                    str = str_concate(str, ((const char *)key->content));
+                    while (word[i] != ' ' && word[i] != '\t' && word[i] != '\r' && word[i] != '\f' && word[i] != '\v' &&  word[i] && word[i] != '|' && word[i] != '>' && word[i] != '<' && word[i] != '\'' && word[i] != '"')
+                    {
+                        str = str_append(str, word[i]);
+                    }
+                    return (dst);
                 }
-                else
-                    str = str_append(str, word[i]);
-                // printf("%s----%d\n",word + i + 1, i);
-                //printf("[%s]\n", str->content);
-                i++;
+                str = str_concate(str, ((const char *)key->content));
             }
+            else
+                str = str_append(str, word[i]);
+            i++;
         }
-        if (check == 1)
-            ((t_token *)tmp->content)->value = ((t_string *)str)->content;
-        check = 0;
-    //     char *p = ((t_token *)tmp->content)->value;
-    //     printf("%s\n", p);
-    // printf("**%d\n", ft_lstsize(tmp));
-        tmp = tmp->next;
     }
-    return (tokens);
+    return (str);
 }
 
 
-// char *get_kw(t_env *menv,char *str,int *i)
+// char *get_kw(t_env *menv,char *str,int i)
 // {
 //     t_string *dst;
 //     char *value;

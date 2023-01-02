@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/20 04:21:36 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/30 16:29:04 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/02 03:41:52 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	new_pwd_and_oldpwd(t_env **menv)
 			free(oldpwd->value);
 			oldpwd->value = pwd->value;
 		}
-		pwd->value = ft_strdup(getcwd(pwd_str, sizeof(pwd_str)));
+		pwd->value = ft_strdup(getcwd(pwd_str, PATH_MAX));
 	}
 }
 
@@ -74,6 +74,8 @@ int	cd_oldpwd(t_env **menv)
 
 int	b_cd(t_env **menv, char *path)
 {
+	char	buffer[PATH_MAX];
+
 	if (!path || ft_strcmp("~", path))
 		return (cd_home(menv));
 	else
@@ -82,11 +84,12 @@ int	b_cd(t_env **menv, char *path)
 			return (cd_oldpwd(menv));
 		else
 		{
-			if (getcwd(NULL, 0) == NULL) {
+			if (getcwd(buffer, PATH_MAX) == NULL)
+			{
 				cd_home(menv);
 				return (1);
 			}
-			if (chdir(path) == -1)
+			else if (chdir(path) == -1)
 			{
 				perror("minishell: cd: ");
 				return (1);

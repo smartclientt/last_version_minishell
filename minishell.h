@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:42 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/31 22:46:00 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/02 02:59:28 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,56 +41,55 @@ typedef struct s_env
 typedef struct s_glob
 {
 	int	exit_status;
-    int g_in;
-    int g_out;
+	int g_expand_dq;
 }				t_glob;
 
 t_glob		v_glob;
 // parssssssssssiiiiiiiiiiing
 typedef struct s_vector
 {
-    char **content;
-    size_t size;
+	char **content;
+	size_t size;
 }   t_vector;
 
 typedef struct s_string
 {
-    char *content;
-    size_t size;
+	char *content;
+	size_t size;
 }   t_string;
 
 typedef enum
 {
-    TOK_START,
+	TOK_START,
 	TOK_EOL,
-    TOK_WORD,
+	TOK_WORD,
 	TOK_ROUTPUT,
 	TOK_DROUTPUT,
 	TOK_RINPUT,
-    TOK_DRINPUT,
+	TOK_DRINPUT,
 	TOK_SINQTE,
 	TOK_DQUOTE,
-    TOK_PIPE,
+	TOK_PIPE,
 }   e_token;
 
 typedef struct s_token
 {
-    char *value; // string_t
-    e_token type;
+	char *value; // string_t
+	e_token type;
 }   t_token;
 
 typedef struct s_redir
 {
-    e_token type;
-    char *filepath; // string_t
+	e_token type;
+	char *filepath; // string_t
 }   t_redir;
 
 typedef struct s_cmd
 {
-    char **args; // t_vector->content
-    int fdin;
-    int fdout;
-    t_list *redirs;
+	char **args; // t_vector->content
+	int fdin;
+	int fdout;
+	t_list *redirs;
 }   t_cmd;
 
 typedef struct s_tools
@@ -200,11 +199,13 @@ void	print_list_tokens(t_list *tokens);
 char	*new_word(char *str, int *i);
 char	*ft_dquote(char *str,int *i);
 char	*ft_squote(char *str,int *i);
-t_list	*get_tokens(char *str);
-t_list	*expand_path(t_env *menv,t_list *tokens);
+// t_list	*expand_path(t_env *menv,t_list *tokens);
+t_string *expand_path(t_env *menv,t_string *dst);
+t_string *expand_path_dq(t_env *menv,t_string *dst);
 t_list	*expand_exit_status(t_list *tokens);
 t_list	*ft_lst_del_first(t_list *tokens);
-
+int find_dollar(char *str);
+t_list  *get_tokens(char *str , t_env *menv);
 //grammar
 int		check_grammar(t_list *tokens);
 

@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:40 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/31 22:22:39 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/02 05:18:45 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,14 @@ t_list	*ft_lst_del_first(t_list *tokens)
 // 	// str[5] = NULL;
 // 	char **cmd1;
 // 	cmd1 = malloc(sizeof(char *) * 3);
-// 	cmd1[0] = "echo";
-// 	cmd1[1] = "saad";
+// 	cmd1[0] = "export";
+// 	cmd1[1] = "saad=holly";
 // 	cmd1[2] = NULL;
 
 // 	char **cmd2;
 // 	cmd2 = malloc(sizeof(char *) * 3);
-// 	cmd2[0] = "ls";
-// 	cmd2[1] = "-la";
+// 	cmd2[0] = "cd";
+// 	cmd2[1] = "dasdasdadasdadas";
 // 	cmd2[2] = NULL;
 
 // 	char **cmd3;
@@ -132,9 +132,17 @@ t_list	*ft_lst_del_first(t_list *tokens)
 // 	// b_export(&menv, NULL);
 // 	printf("----------------------------------\n");
 // 	// minishell_loop(&menv);
-// 	// execution(&menv, cmds, 3);
+// 	// execution(&menv, cmds, 1);
+// 	// b_export(&menv, cmd1);
+// 	// b_pwd(menv);
+// 	b_cd(&menv, cmd2[1]);
+// 	// b_pwd(menv);
+// 	// b_export(&menv, NULL);
+// 	// b_pwd(menv);
+// 	// b_unset(&menv, cmd2);
+// 	// system("leaks minishell");
 // 	// printf("**********************************\n");
-// 	execution(&menv, cmds, 3);
+// 	// execution(&menv, cmds, 3);
 // 	// b_export(&menv, NULL);
 // 	printf("----------------------------------\n");
 // 	// execution(&menv, cmds + 1, 1);
@@ -142,5 +150,7 @@ t_list	*ft_lst_del_first(t_list *tokens)
 // 	// execution(&menv, cmds + 3, 1);;
 // 	// printf("----------------------------------\n");
 // 	// b_export(&menv, NULL);
+// 	// free_env(menv);
+// 	system("leaks minishell");
 // 	return (0);
 // }

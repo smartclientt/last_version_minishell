@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:21:22 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/29 03:52:58 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/02 03:42:43 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		b_pwd(t_env	*menv)
 
 	pwd_node = find_key_node(menv, ft_strdup("PWD"));
 	if (!pwd_node)
-		printf("%s\n", getcwd(pwd, sizeof(pwd)));
+		printf("%s\n", getcwd(pwd, PATH_MAX));
 	else
 		printf("%s\n", pwd_node->value);
 	return (0);

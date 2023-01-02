@@ -15,34 +15,35 @@
 //     }
 //     return (fd);
 // }
+void	exit_herdoc(int sig)
+{
+	(void)sig;
+	exit(1);
+}
 
 char	*ft_heredocs(char *file)
 {
-	t_string	    *input;
+	t_string	*input;
 	char		*buffer;
-	char *result;
-	// int			    pipefd[2];
+	char		*result;
 
 	input = new_string("");
-	while (1)
+	signal(SIGINT, SIG_IGN);
+	if (fork() == 0)
 	{
-		buffer = readline("> ");
-		if (!buffer || ft_strncmp(buffer, file, ft_strlen(file) + 1) == 0)
-			break ;
-        input = str_concate(input, buffer);
-		input = str_append(input, '\n');
-		free(buffer);
+		while (1)
+		{
+			signal(SIGINT, exit_herdoc);
+			signal(SIGQUIT, SIG_IGN);
+			buffer = readline("> ");
+			if (!buffer || ft_strncmp(buffer, file, ft_strlen(file) + 1) == 0)
+				break ;
+			input = str_concate(input, buffer);
+			input = str_append(input, '\n');
+			free(buffer);
+		}
+		wait(0);
 	}
-	// if (pipe(pipefd))
-	// {
-	// 	perror("minishell");
-	// 	exit(1);
-	// }
-	// write(1, ((t_string *)input)->content, input->size);
-	// dup2(pipefd[0], v_glob.g_in);
-	// close(pipefd[0]);
-	// close(pipefd[1]);
-	// free_string(&input);
 	free(file);
 	result = ((t_string *)input)->content;
 	return (result);

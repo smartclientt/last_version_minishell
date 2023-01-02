@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 17:04:54 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/31 21:16:50 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/02 03:03:26 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_env	*print_sorted_env(t_env *menv)
 			find_value_with_key(menv, sorted[i]));
 		i++;
 	}
+	free_array_2d(sorted);
 	return (menv);
 }
 

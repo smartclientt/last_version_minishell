@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:16:50 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/31 20:10:19 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/01 02:04:02 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,4 @@ void	multi_pipes(t_env **menv, t_list *cmds, int cmd_nbr)
 		tmp = tmp->next;
 	}
 	wait_exit_status(&tools);
-	printf("status == %d\n", v_glob.exit_status % 255);
 }

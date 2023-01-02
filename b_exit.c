@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 22:38:59 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/01 01:18:24 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/02 02:59:35 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,20 @@ void	b_exit(char **args, t_env *menv)
 	if (args)
 	{
 		if (nbr_of_args(args) == 0)
-			;
+			ft_printf(2, "exit\n");
 		else if (!is_nbr(args[0]))
 		{
-			ft_printf(2, "minishell: exit: %s: numeric argument required\n",
+			ft_printf(2, "exit\nminishell: exit: %s: numeric argument required\n",
 				args[0]);
 			exit_status = 255;
 		}
 		else if (is_nbr(args[0]) && nbr_of_args(args) == 1)
-			exit_status = ft_atoi(args[0]) % 255;
+			exit_status = ft_atoi(args[0]) % 256;
 		else if (is_nbr(args[0]) && nbr_of_args(args) > 1)
 		{
-			ft_printf(2, "minishell: exit: too many arguments\n");
-			exit_status = 1;
+			ft_printf(2, "exit\nminishell: exit: too many arguments\n");
+			v_glob.exit_status = 1;
+			return ;
 		}
 	}
 	v_glob.exit_status = exit_status;
