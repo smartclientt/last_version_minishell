@@ -21,7 +21,7 @@ int	check_grammar(t_list *tokens)
 		if (check_rules(prv->type, cur->type))
 		{
 			write(2, "minishell: syntax error near unexpected token `", 47);
-			write(2, (t_token *)cur->value, ft_strlen((const char *)((t_token *)cur->value)));
+			write(2, (t_token *)prv->value, ft_strlen((const char *)((t_token *)prv->value)));
 			write(2, "'\n", 2);
 			return (0);
 		}

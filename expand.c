@@ -35,6 +35,11 @@ char *get_kw_dq(t_env *menv,char *str,int *i)
         value = find_value_with_key(menv, dst->content);
         return (value);
     }
+    else
+    {
+        v_glob.g_expand_dq = 1;
+        return (ft_substr(str, *i, ft_strlen(str)));
+    }
     return (NULL);
 }
 
@@ -72,14 +77,18 @@ t_string *expand_path_dq(t_env *menv,t_string *dst)
     word = ((t_string *)dst)->content;
     while(word[i] != '\0' && i < (int)((t_string *)dst)->size)
     {
-        if (word[i]== '$')
+        if(word[i]== '$' && ft_strchr("\0\r\t\f\v ", word[i + 1]))
+            return (str_append(str, '$'));
+        else if (word[i]== '$')
         {
-            key->content = get_kw_dq(menv, word, &i);
+            key->content = get_kw_dq(menv,word, &i);
             if(key->content == NULL)
-                return (free_string(&str), dst);
+                return (free_string(&str) , new_string(""));
+            if (v_glob.g_expand_dq == 1)
+                return (v_glob.g_expand_dq = 0, str_concate(str,key->content));
             str = str_concate(str, ((const char *)key->content));
-            if (word[i] == '\'')
-                str = str_concate(str, "'");
+            if (!ft_strchr("\r\t\0\f\v|><\"",word[i]))
+                str = str_append(str, word[i]);
         }
         else
             str = str_append(str, word[i]);
@@ -88,45 +97,45 @@ t_string *expand_path_dq(t_env *menv,t_string *dst)
     return (str);
 }
 
-t_string *expand_path(t_env *menv,t_string *dst)
-{
-    char	*word;
-    int     i;
-    t_string *key;
-    t_string *str = NULL;
-    char *old_str = NULL;
-    int check = 0;
+// t_string *expand_path(t_env *menv,t_string *dst)
+// {
+//     char	*word;
+//     int     i;
+//     t_string *key;
+//     t_string *str = NULL;
+//     char *old_str = NULL;
+//     int check = 0;
 
-    i = 0;
-	key = new_string(NULL);
-    if (find_dollar(((t_string *)dst)->content) == 1)
-    {
-        str = new_string("");
-        word = ((t_string *)dst)->content;
-        old_str = ((t_string *)dst)->content;
-        while(word[i] != '\0' && i < (int)((t_string *)dst)->size)
-        {
-            if (word[i]== '$')
-            {
-                check = 1;
-                key->content = get_kw(menv, word, &i);
-                if(key->content == NULL)
-                {
-                    while (word[i] != ' ' && word[i] != '\t' && word[i] != '\r' && word[i] != '\f' && word[i] != '\v' &&  word[i] && word[i] != '|' && word[i] != '>' && word[i] != '<' && word[i] != '\'' && word[i] != '"')
-                    {
-                        str = str_append(str, word[i]);
-                    }
-                    return (dst);
-                }
-                str = str_concate(str, ((const char *)key->content));
-            }
-            else
-                str = str_append(str, word[i]);
-            i++;
-        }
-    }
-    return (str);
-}
+//     i = 0;
+// 	key = new_string(NULL);
+//     if (find_dollar(((t_string *)dst)->content) == 1)
+//     {
+//         str = new_string("");
+//         word = ((t_string *)dst)->content;
+//         old_str = ((t_string *)dst)->content;
+//         while(word[i] != '\0' && i < (int)((t_string *)dst)->size)
+//         {
+//             if (word[i]== '$')
+//             {
+//                 check = 1;
+//                 key->content = get_kw(menv,word, &i);
+//                 if(key->content == NULL)
+//                 {
+//                     while (word[i] != ' ' && word[i] != '\t' && word[i] != '\r' && word[i] != '\f' && word[i] != '\v' &&  word[i] && word[i] != '|' && word[i] != '>' && word[i] != '<' && word[i] != '\'' && word[i] != '"')
+//                     {
+//                         str = str_append(str, word[i]);
+//                     }
+//                     return (dst);
+//                 }
+//                 str = str_concate(str, ((const char *)key->content));
+//             }
+//             else
+//                 str = str_append(str, word[i]);
+//             i++;
+//         }
+//     }
+//     return (str);
+// }
 
 
 // char *get_kw(t_env *menv,char *str,int i)

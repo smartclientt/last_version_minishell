@@ -5,22 +5,23 @@ t_string    *get_word_dq(t_env *menv,char *str, int *i)
     t_string    *dst;
 
     dst = new_string(NULL);
-    while(str[*i] == '"')
-        (*i)++;
-    while(str[*i] != '"' && ((*i) <  (int)ft_strlen(str) - 1))
+    (*i)++;
+    while(str[*i] != '"')
     {
         //filter_quotes(str[*i], check, i);
-        if (str[*i] == '\'')
-            v_glob.g_expand_dq = 1;
+        // if (str[*i] == '\'')
+        //     v_glob.g_expand_dq = 1;
         dst = str_append(dst, str[*i]);
         (*i)++;
     }
-    if (find_dollar(((t_string *)dst)->content) == 1)
+    if (find_dollar_status(dst->content))
+        dst = check_expand_status(dst);
+    else if (find_dollar(((t_string *)dst)->content) == 1)
         dst = expand_path_dq(menv,dst);
     // dst = expand_exit_status(dst);
-    if (!dst->content)
-        return (NULL);
     (*i)++;
+    // if (!dst->content)
+    //     return (NULL);
     // check[1]++;
     return (dst);
 }
@@ -36,12 +37,13 @@ t_string    *get_word(t_env *menv,char *str, int *i)
         dst = str_append(dst, str[*i]);
         (*i)++;
     }
-    if (find_dollar(((t_string *)dst)->content) == 1)
+    if (find_dollar_status(dst->content))
+        dst = check_expand_status(dst);
+    else if (find_dollar(((t_string *)dst)->content) == 1)
         dst = expand_path_dq(menv,dst);
     // dst = expand_exit_status(dst);
     if (!dst->content)
         return (NULL);
-    (*i)++;
     // check[1]++;
     return (dst);
 }
@@ -52,8 +54,8 @@ t_string    *get_word_sq(t_env *menv, char *str, int *i)
     (void)menv;
 
     dst = new_string(NULL);
-    while(str[*i] == '\'')
-        (*i)++;
+    // printf("[%c][%s]\n",str[*i], dst->content);
+    (*i)++;
     while(str[*i] != '\'')
     {
         //filter_quotes(str[*i], check, i);
@@ -62,62 +64,63 @@ t_string    *get_word_sq(t_env *menv, char *str, int *i)
     }
     // if (find_dollar(((t_string *)dst)->content) == 1)
     //     dst = expand_path(menv,dst);
-    if (!dst->content)
-        return (NULL);
+    // if (!dst->content)
+    //     return (NULL);
     (*i)++;
     // check[0]++;
     return (dst);
 }
 
-t_string  *get_expend(t_env *menv, char *str, int *i)
-{
-    t_string    *dst;
+// t_string  *get_expend(t_env *menv, char *str, int *i)
+// {
+//     t_string    *dst;
 
-    dst = new_string(NULL);;
-    while(!ft_strchr("\r\t\f\v|>< \"'",str[*i]) && str[*i] != '\0' && ((*i) <  (int)ft_strlen(str)))
-    {
-        // filter_quotes(str[*i], check, i);
-        char *old_dst = NULL;
-        (*i)++;
-        while(str[*i] != '"' && ((*i) <  (int)ft_strlen(str) - 1) && ft_isalnum(str[(*i)]))
-        {
-            dst = str_append(dst, str[*i]);
-            (*i)++;
-        }
-        if (!dst->content)
-            return (NULL);
-        old_dst = dst->content;
-        dst = expand_path_dq(menv,dst);
-        if (!ft_strcmp(dst->content, old_dst))
-            return (dst);
-        else
-            return (NULL);
-        dst = str_append(dst, str[*i]);
-        (*i)++;
-    }
-    return (dst);
-}
+//     dst = new_string(NULL);;
+//     while(!ft_strchr("\r\t\f\v\0|>< \"'",str[*i]) && ((*i) <  (int)ft_strlen(str)))
+//     {
+//         // filter_quotes(str[*i], check, i);
+//         char *old_dst = NULL;
+//         (*i)++;
+//         while(!ft_strchr("\r\t\f\v\0|>< \"'",str[*i]) && ((*i) <  (int)ft_strlen(str) - 1) && ft_isalnum(str[(*i)]))
+//         {
+//             dst = str_append(dst, str[*i]);
+//             (*i)++;
+//         }
+//         if (!dst->content)
+//             return (NULL);
+//         old_dst = dst->content;
+//         dst = expand_path_dq(menv,dst);
+//         if (!ft_strcmp(dst->content, old_dst))
+//             return (dst);
+//         else
+//             return (NULL);
+//         dst = str_append(dst, str[*i]);
+//         (*i)++;
+//     }
+//     return (dst);
+// }
 
 char  *again(t_env *menv, char *str, int *i)
 {
-    char *ret = NULL;
+    char *ret = "";
     t_string *dst;
 
     dst = NULL;
-    if (!ft_strchr("\r\t\f\v|>< ",str[*i]) && str[*i] != '\0' && (*i) < ((int)ft_strlen(str)) && str[*i] != ' ')
+    while (!ft_strchr("\r\t\f\0\v|>< ",str[*i]) && (*i) < ((int)ft_strlen(str)) && str[*i] != ' ')
     {
-        // printf("--%c**\n",str[*i]);
-        if (str[*i] == '"' && ((*i) <  (int)ft_strlen(str)))
+        // printf("--%c--(%d)",str[*i], *i);
+        if (str[*i] == '"')
             dst = get_word_dq(menv, str, i);
-        else if (str[*i] == '\'' && (*i) < (int)ft_strlen(str))
+        else if (str[*i] == '\'')
             dst = get_word_sq(menv, str, i);
-        else if(!ft_strchr("\r\t\f\v|>< \"'",str[*i]) && str[*i] != '\0')
+        else
             dst = get_word(menv, str, i);
-        if (dst == NULL)
-            return (NULL);
-        //printf("--%s--",dst->content);
+        // if (dst == NULL)
+        //     return (NULL);
+        if (dst && dst->content)
+            ret = ft_strjoin(ret, ((t_string *)dst)->content);
+        free_string(&dst);
     }
-    ret = ((t_string *)dst)->content;
     return (ret);
 }
 
@@ -126,6 +129,7 @@ char *new_word_v2(t_env *menv, char *str , int *i)
     int check[2];
     t_string *con;
     char *ret;
+        char *mm = NULL;
 
     check[0] = 0;//sq
     check[1] = 0;//dq
@@ -133,18 +137,19 @@ char *new_word_v2(t_env *menv, char *str , int *i)
     // free(dst);
     ret = NULL;
     con = new_string(NULL);
-    if (!ft_strchr("\r\t\f\v|><",str[*i]) && str[*i] != '\0' && (*i) < ((int)ft_strlen(str)) && str[*i] != ' ')
+    if (!ft_strchr("\r\t\f\v\0|>< ",str[*i]) && (*i) < ((int)ft_strlen(str)))
     {
-        const char *mm = (const char *)again(menv, str, i);
-        con = str_concate(con, mm);
+        
+        mm = again(menv, str, i);
+        // con = str_concate(con, mm);
     }
-    ret = ((t_string *)con)->content;
-        if (ret == NULL)
-        {
-            puts("hey");
-            // break;
-        }
-    return (ret);
+    // ret = ((t_string *)mm)->content;
+    // if (ret == NULL)
+    // {
+    //     puts("hey");
+    //     // break;
+    // }
+    return (mm);
 }
 
 void    ft_check_quotes_utils(char *str, int *i, int *sq, int  *dq)
@@ -232,11 +237,8 @@ void  add_tokens(t_env *menv, t_list **tokens, char *str, int *i)
         char *w;
         w = new_word_v2(menv, str , i);
           if (ft_strcmp(w,""))
-        {    //(*i)++;
-            puts("||");
-            return ;}
+            return ;
         ft_lstadd_back(tokens, new_node(new_token(w, TOK_DQUOTE)));
-        //ft_lstadd_back(tokens, new_node(new_token(ft_dquote(str , i), TOK_DQUOTE)));
     }
     else
         token_word(menv, tokens, str, i);
