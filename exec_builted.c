@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:29:55 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/31 22:26:03 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/03 08:48:24 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	is_builted(char **args)
 {
+	if (!args[0])
+		return (0);
 	if (!ft_strncmp(args[0], "cd", 3) || !ft_strncmp(args[0], "echo", 5)
 		|| !ft_strncmp(args[0], "export", 7) || !ft_strncmp(args[0], "unset", 6)
 		|| !ft_strncmp(args[0], "env", 4) || !ft_strncmp(args[0], "pwd", 4)

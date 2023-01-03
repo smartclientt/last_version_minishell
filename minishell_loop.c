@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -36,15 +37,15 @@ void	minishell_loop(t_env **menv)
 		}
 		add_history(line);
 		tokens = get_tokens(line, *menv);
-        tokens = ft_lst_del_first(tokens);
 		// print_list_tokens(tokens);
 		if (!tokens || !check_grammar(tokens))
 		{
-			v_glob.exit_status = 2;
+			// v_glob.exit_status = 2;
 		//lst_del(&token_lst, token_del);
 		}
 		else
 		{
+       		tokens = ft_lst_del_first(tokens);
 			cmds = get_cmds(tokens);
 			// print_list(cmds);
 			execution(menv, cmds, ft_lstsize(cmds));

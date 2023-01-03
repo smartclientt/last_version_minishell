@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 09:02:47 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/03 02:37:36 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/03 09:27:40 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,19 @@ void	execution(t_env **menv, t_list *cmds, int cmd_nbr)
 
 	while (i < cmd_nbr)
 	{
-		// if (((t_cmd *)tmp->content)->args[0] == NULL)
-		// 	continue ;
+		if (((t_cmd *)tmp->content)->args[0] == NULL)
+		{
+			i++;
+			tmp = tmp->next;
+			continue ;
+		}
 		if (!is_builted(((t_cmd *)tmp->content)->args))
 			((t_cmd *)tmp->content)->args[0]
 				= update_cmd_path(*menv, ((t_cmd *)tmp->content)->args);
 		tmp = tmp->next;
 		i++;
 	}
+	
 	if (cmd_nbr == 1 && is_builted(((t_cmd *)cmds->content)->args))
 		execute_red(cmds, ((t_cmd *)cmds->content)->redirs, menv);
 	else
