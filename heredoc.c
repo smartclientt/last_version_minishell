@@ -32,7 +32,7 @@ char	*ft_heredocs(char *file)
 	while (1)
 	{
 		buffer = readline("> ");
-		if (!buffer || ft_strncmp(buffer, file, ft_strlen(file) + 1) == 0)
+		if (!buffer || ft_strncmp(buffer, file, ft_strlen(file) + 1) == 0 || !v_glob.heredoc_exit)
 			break ;
 		input = str_concate(input, buffer);
 		input = str_append(input, '\n');

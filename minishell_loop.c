@@ -13,6 +13,11 @@
 
 #include "minishell.h"
 
+int	event()
+{
+	return 0;
+}
+
 void	minishell_loop(t_env **menv)
 {
 	char	*line;
@@ -29,7 +34,9 @@ void	minishell_loop(t_env **menv)
 		line = NULL;
 		cmds = NULL;
 		line = readline("minishell-$ ");
-		signal(SIGINT, SIG_IGN);
+		v_glob.heredoc_exit = 1;
+		rl_event_hook = event;
+		signal(SIGINT, &signal_handler);
 		if (!line)
 		{
 			printf("exit\n");
@@ -47,7 +54,10 @@ void	minishell_loop(t_env **menv)
 		{
        		tokens = ft_lst_del_first(tokens);
 			cmds = get_cmds(tokens);
+			if(!v_glob.heredoc_exit)
+				continue;
 			// print_list(cmds);
+			signal(SIGINT, SIG_IGN);
 			execution(menv, cmds, ft_lstsize(cmds));
 			free(line);
 			free(tokens);
