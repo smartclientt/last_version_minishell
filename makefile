@@ -6,7 +6,7 @@
 #    By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/18 01:50:38 by shbi              #+#    #+#              #
-#    Updated: 2022/12/31 22:20:57 by shbi             ###   ########.fr        #
+#    Updated: 2023/01/03 11:57:43 by shbi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ PRINTF		=	./ft_printf/libftprintf.a
 PATH_LIBFT	=	./libft
 PATH_PRINTF	=	./ft_printf
 CC			=	cc
-FLAGS		=	-Wall -Werror -Wextra -g
+FLAGS		=	-Wall -Werror -Wextra
 LDFLAGS		=	-lreadline
 LDFLAGSS	=	-L /Users/${USER}/homebrew/opt/readline/lib
 CPPFLAGS	=	-I /Users/${USER}/homebrew/opt/readline/include
@@ -52,4 +52,3 @@ fclean		:	clean
 				@make fclean -C $(PATH_LIBFT)
 				@make fclean -C $(PATH_PRINTF)
 re			:	fclean all
-				

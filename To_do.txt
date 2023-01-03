@@ -31,3 +31,9 @@ TODO:
 			- append buffer to t_string
 			- free buffer
 ----- parsing ------ 
+
+
+
+new to To_Do:
+protect redection input "check existance "need return " file"
+protect redection output "check permessions "need return " file"
