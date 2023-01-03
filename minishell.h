@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:42 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/02 05:30:17 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/03 02:04:30 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 # include "./libft/libft.h"
 # include "./ft_printf/ft_printf.h"
 
-
-
 // tools
 int		ft_strcmp(char *s1, char *s2);
 char	*ft_free(char **s);
@@ -42,6 +40,7 @@ typedef struct s_glob
 {
 	int	exit_status;
 	int g_expand_dq;
+	int	heredoc_exit;
 }				t_glob;
 
 t_glob		v_glob;

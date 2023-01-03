@@ -18,7 +18,8 @@
 void	exit_herdoc(int sig)
 {
 	(void)sig;
-	exit(1);
+	v_glob.heredoc_exit = 0;
+	exit(0);
 }
 
 char	*ft_heredocs(char *file)
@@ -27,14 +28,16 @@ char	*ft_heredocs(char *file)
 	char		*buffer;
 	char		*result;
 
+
 	input = new_string("");
-	// signal(SIGINT, SIG_IGN);
+	v_glob.heredoc_exit = 1;
 	if (fork() == 0)
 	{
-		while (1)
+		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, &exit_herdoc);
+		while (v_glob.heredoc_exit == 1)
 		{
-			// signal(SIGINT, exit_herdoc);
-			// signal(SIGQUIT, SIG_IGN);
+			// printf("herdoc = %d\n", v_glob.heredoc_exit);
 			buffer = readline("> ");
 			if (!buffer || ft_strncmp(buffer, file, ft_strlen(file) + 1) == 0)
 				break ;
@@ -42,8 +45,9 @@ char	*ft_heredocs(char *file)
 			input = str_append(input, '\n');
 			free(buffer);
 		}
-		wait(0);
+		signal(SIGINT, SIG_IGN);
 	}
+	wait(0);
 	free(file);
 	result = ((t_string *)input)->content;
 	return (result);

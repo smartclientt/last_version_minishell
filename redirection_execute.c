@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 19:01:45 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/02 05:51:03 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/03 04:59:51 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	double_red_input(t_list *cmds, t_list *red, t_env **menv)
 {
 	int	fd[2];
 	int	backup;
-
+	
 	pipe(fd);
-	close(fd[1]);
 	backup = dup(0);
 	ft_putstr_fd(((t_redir *)red->content)->filepath, fd[1]);
+	close(fd[1]);
 	dup2(fd[0], 0);
 	execute_red(cmds, red->next, menv);
 	dup2(backup, 0);

@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 22:22:18 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/30 22:22:58 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/03 00:51:28 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ int	exec_no_builted(t_env **menv, char **cmd)
 	id = fork();
 	if (id == 0)
 	{
+		rl_catch_signals = 1;
 		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
 		checker = check_access_path(cmd[0]);
 		if (checker == 1)
 		{
@@ -67,5 +69,12 @@ int	exec_no_builted(t_env **menv, char **cmd)
 	waitpid(id, &status, 0);
 	if (WIFEXITED(status))
 		WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		if (status == 2)
+			ft_printf(2, "\n");
+		if (status == 3)
+			ft_printf(2, "Quit: 3\n");
+	}
 	return (status % 255);
 }
