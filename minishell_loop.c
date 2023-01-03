@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 11:23:55 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/03 03:45:50 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/03 05:48:42 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,19 @@ void	minishell_loop(t_env **menv)
 		tokens = get_tokens(line, *menv);
         tokens = ft_lst_del_first(tokens);
 		// print_list_tokens(tokens);
-		// if (!tokens || !check_grammar(tokens))
-		// {
-		// 	v_glob.exit_status = 258;
-		// //lst_del(&token_lst, token_del);
-		// }
-		// else
-		// {
-		cmds = get_cmds(tokens);
-		// print_list(cmds);
-		execution(menv, cmds, ft_lstsize(cmds));
-		free(line);
-		free(tokens);
-		free(cmds);
-		// }
+		if (!tokens || !check_grammar(tokens))
+		{
+			v_glob.exit_status = 2;
+		//lst_del(&token_lst, token_del);
+		}
+		else
+		{
+			cmds = get_cmds(tokens);
+			// print_list(cmds);
+			execution(menv, cmds, ft_lstsize(cmds));
+			free(line);
+			free(tokens);
+			free(cmds);
+		}
 	}
 }

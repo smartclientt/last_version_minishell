@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   some_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 00:41:44 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/29 18:27:36 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/03 05:49:36 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,49 @@ t_cmd   *new_cmd(char **args, t_list *redirs)
     return (cmd);
 }
 
+void    ft_gets(t_list **tp, t_list **red_list)
+{
+    t_list *tmp;
+    
+    tmp = *tp;
+    while (((t_token *)tmp->content)->type == TOK_RINPUT 
+        || ((t_token *)tmp->content)->type == TOK_ROUTPUT 
+        || ((t_token *)tmp->content)->type == TOK_DRINPUT 
+        || ((t_token *)tmp->content)->type == TOK_DROUTPUT)
+    {
+        if (((t_token *)tmp->content)->type == TOK_DRINPUT)
+            ft_lstadd_back(red_list, new_node(new_red(ft_heredocs(
+                ((t_token *)tmp->next->content)->value)
+                , ((t_token *)tmp->content)->type)));
+        else
+            ft_lstadd_back(red_list, new_node(new_red(
+                ((t_token *)tmp->next->content)->value
+                , ((t_token *)tmp->content)->type)));
+        tmp = tmp->next->next;
+    }
+    *tp = tmp;
+}
+
+void    ft_get_cmds(t_list **tokens, t_list **red_list, t_vector **arg)
+{
+    t_list *tmp;
+
+    tmp = *tokens;
+    while (((t_token *)tmp->content)->type != TOK_PIPE 
+        && ((t_token *)tmp->content)->type != TOK_EOL)
+    {
+        if (((t_token *)tmp->content)->type == TOK_WORD  
+        || ((t_token *)tmp->content)->type == TOK_DQUOTE 
+        || ((t_token *)tmp->content)->type == TOK_SINQTE)
+        {
+            *arg = vec_append(*arg, ((t_token *)tmp->content)->value);
+            tmp = tmp->next;
+        }
+        ft_gets(&tmp, red_list);
+    }
+    *tokens = tmp;
+}
+
 t_list  *get_cmds(t_list *tokens)
 {
     t_list *tmp;
@@ -47,27 +90,14 @@ t_list  *get_cmds(t_list *tokens)
 
     cmds = NULL;
     tmp = tokens;
-    while(((t_token *)tmp->content)->type != TOK_EOL && tmp->next != NULL)
+    while(((t_token *)tmp->content)->type != TOK_EOL 
+        && tmp->next != NULL)
     {
         red_list = NULL;
         arg = new_vector(NULL);
-        while (((t_token *)tmp->content)->type == TOK_WORD  || ((t_token *)tmp->content)->type == TOK_DQUOTE 
-            || ((t_token *)tmp->content)->type == TOK_SINQTE)
-        {
-            arg = vec_append(arg, ((t_token *)tmp->content)->value);
-            tmp = tmp->next;
-        }
-        while (((t_token *)tmp->content)->type == TOK_RINPUT || ((t_token *)tmp->content)->type == TOK_ROUTPUT 
-            || ((t_token *)tmp->content)->type == TOK_DRINPUT || ((t_token *)tmp->content)->type == TOK_DROUTPUT)
-        {
-            if (((t_token *)tmp->content)->type == TOK_DRINPUT)
-                ft_lstadd_back(&red_list, new_node(new_red(ft_heredocs(((t_token *)tmp->next->content)->value), ((t_token *)tmp->content)->type)));
-            else
-                ft_lstadd_back(&red_list, new_node(new_red(((t_token *)tmp->next->content)->value, ((t_token *)tmp->content)->type)));
-                //printf("%s\n", (red_list->content));
-            tmp = tmp->next->next;
-        }
-        ft_lstadd_back(&cmds, new_node(new_cmd(arg->content, red_list)));
+        ft_get_cmds(&tmp, &red_list, &arg);
+        ft_lstadd_back(&cmds, new_node(
+            new_cmd(arg->content, red_list)));
         if (tmp->next == NULL)
             break;
         tmp = tmp->next;
