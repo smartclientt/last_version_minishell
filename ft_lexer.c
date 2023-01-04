@@ -154,7 +154,8 @@ void    token_word(t_env *menv,t_list **tokens, char *str, int *i)
 
 void    add_tokens_with(t_list **tokens, char *str, int *i)
 {
-    if (str[(*i) + 1] == '>' || str[(*i) + 1] == '<')
+    if ((str[*i] == '>' && str[(*i) + 1] == '>') 
+	|| (str[*i] == '<' && str[(*i) + 1] == '<'))
     {
         if (str[(*i)] == '<' && str[(*i) + 1] == '<')
         {

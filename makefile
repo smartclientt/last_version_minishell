@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+         #
+#    By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/18 01:50:38 by shbi              #+#    #+#              #
-#    Updated: 2023/01/03 22:23:03 by yelousse         ###   ########.fr        #
+#    Updated: 2023/01/04 02:53:19 by shbi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,8 @@ PATH_PRINTF	=	./ft_printf
 CC			=	cc
 FLAGS		=	-Wall -Werror -Wextra
 LDFLAGS		=	-lreadline
-LDFLAGSS	=	-L /Users/${USER}/.brew/opt/readline/lib
-CPPFLAGS	=	-I /Users/${USER}/.brew/opt/readline/include
+LDFLAGSS	=	-L /Users/${USER}/homebrew/opt/readline/lib
+CPPFLAGS	=	-I /Users/${USER}/homebrew/opt/readline/include
 RM			=	rm -rf
 
 all			:	$(NAME)

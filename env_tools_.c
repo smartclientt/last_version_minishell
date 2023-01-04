@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:48:49 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/02 03:43:20 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/04 02:31:53 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ void	print_env(t_env *menv)
 {
 	while (menv)
 	{
-		ft_putstr_fd(menv->key, 1);
-		ft_putstr_fd("=", 1);
-		ft_putstr_fd(menv->value, 1);
-		ft_putstr_fd("\n", 1);
+		if (ft_strncmp("", menv->value, 2) != 0)
+		{
+			ft_putstr_fd(menv->key, 1);
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd(menv->value, 1);
+			ft_putstr_fd("\n", 1);
+		}
 		menv = menv->next;
 	}
 }

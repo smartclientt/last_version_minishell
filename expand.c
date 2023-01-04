@@ -7,7 +7,7 @@ int find_dollar(char *str)
     i = 0;
     if (str == NULL)
         return (0);
-    while(str[i])
+    while(str[i] && str[i + 1])
     {
         if (str[i] == '$')
             return (1);
@@ -25,7 +25,7 @@ char *get_kw_dq(t_env *menv,char *str,int *i)
     v_glob.g_expand_dq = 0;
     dst = new_string("");
     (*i)++;
-    while(str[(*i)] && ft_isalnum(str[(*i)]))
+    while(str[(*i)] && (ft_isalnum(str[(*i)]) || str[*i] == '_'))
     {
         dst = str_append(dst, str[(*i)]);
         (*i)++;

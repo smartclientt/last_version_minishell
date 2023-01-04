@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:42 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/04 00:55:16 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/04 03:01:44 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_env
 typedef struct s_glob
 {
 	int	exit_status;
-	int	expand_heredoc;
+	int expand_heredoc;
 	int g_expand_dq;
 	int	heredoc_exit;
 }				t_glob;
@@ -128,6 +128,7 @@ int		is_builted(char **args);
 int		exec_builted(t_env **menv, char **args);
 
 int		b_export(t_env **menv, char **args);
+void	b_export_(t_env **menv, char **args, int i);
 void	new_env_value(t_env **menv, char *key, char *new_value);
 int		cmp_key(char *s1, char *s2);
 int		env_size(t_env *lst);
@@ -137,6 +138,8 @@ int		get_index_min(char **array, int i);
 char	**sorted_array(char **array);
 t_env	*print_sorted_env(t_env *menv);
 int		check_export_args(char *arg);
+void	join_env_value(t_env **menv, char *key, char *new_value);
+char	*get_key_plus(char *env);
 
 int		b_unset(t_env **menv, char **args);
 t_env	*remove_node(t_env *menv, char *key);
@@ -223,7 +226,7 @@ t_string *str_append(t_string *dst, char c);
 void free_string(t_string **str);
 
 // some function
-t_list  *get_cmds(t_list *tokens, t_env *menv);
+t_list	*get_cmds(t_list *tokens, t_env *menv);
 t_redir *new_red(char *path, e_token type);
 t_cmd   *new_cmd(char **args, t_list *redirs);
 
