@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:42 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/04 03:01:44 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/04 06:24:57 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	char **args; // t_vector->content
-	int fdin;
-	int fdout;
 	t_list *redirs;
 }   t_cmd;
 

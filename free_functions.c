@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 22:11:40 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/02 02:59:26 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/04 06:29:47 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,19 @@ void	free_cmds(t_list *cmds)
 		free_redir(((t_cmd *)cmds)->redirs);
 		free(((t_cmd *)cmds));
 		cmds = next;
+	}
+}
+
+void	free_tokens(t_list *tokens)
+{
+	t_list	*next;
+
+	next = tokens;
+	while (tokens)
+	{
+		next = tokens->next;
+		free(((t_token *)tokens)->value);
+		free(tokens);
+		tokens = next;
 	}
 }

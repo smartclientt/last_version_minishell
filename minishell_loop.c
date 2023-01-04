@@ -45,7 +45,6 @@ void	minishell_loop(t_env **menv)
 		}
 		add_history(line);
 		tokens = get_tokens(line, *menv);
-		// print_list_tokens(tokens);
 		if (!tokens || !check_grammar(tokens))
 		{
 			// v_glob.exit_status = 2;
