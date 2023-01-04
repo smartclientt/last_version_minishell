@@ -1,5 +1,9 @@
 {
     "files.associations": {
         "minishell.h": "c"
-    }
+    },
+    "editor.tabCompletion": "off",
+    "editor.useTabStops": true,
+    "terminal.integrated.tabs.enableAnimation": true,
+    "editor.insertSpaces": false
 }

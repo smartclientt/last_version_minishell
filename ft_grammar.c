@@ -67,16 +67,25 @@ int	check_only(t_list *ptr)
 	return (1);
 }
 
+void ()
+{
+	
+}
+
 int	check_grammar(t_list *tokens)
 {
 	t_list	*ptr;
+	int		x;
 
+	x = 1;
 	ptr = tokens;
 	if (ft_lstsize(ptr) <= 2)
 		return (1);
 	if (!check_only_red(ptr))
-		return (0);
+		x = 0;
 	if (!check_only(ptr))
+		x = 0;
+	if (x == 0)
 		return (0);
 	return (1);
 }

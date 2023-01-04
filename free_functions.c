@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 22:11:40 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/04 06:29:47 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/04 06:50:08 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	free_redir(t_list *redir)
 	{
 		next = redir->next;
 		free(((t_redir *)redir)->filepath);
+		free((t_redir *)redir);
 		redir = next;
 	}
 }
@@ -79,7 +80,17 @@ void	free_tokens(t_list *tokens)
 	{
 		next = tokens->next;
 		free(((t_token *)tokens)->value);
-		free(tokens);
+		free((t_token *)tokens);
 		tokens = next;
+	}
+}
+
+
+void ft_free(void **ptr)
+{
+	if (*ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
 	}
 }

@@ -1,105 +1,118 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/04 09:29:45 by yelousse          #+#    #+#             */
+/*   Updated: 2023/01/04 09:40:51 by yelousse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int find_dollar(char *str)
+int	find_dollar(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (str == NULL)
-        return (0);
-    while(str[i] && str[i + 1])
-    {
-        if (str[i] == '$')
-            return (1);
-        i++;
-    }
-    return (0);
+	i = 0;
+	if (str == NULL)
+		return (0);
+	while (str[i] && str[i + 1])
+	{
+		if (str[i] == '$')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-char *get_kw_dq(t_env *menv,char *str,int *i)
+char	*get_kw_dq(t_env *menv, char *str, int *i)
 {
-    t_string *dst;
-    char *value;
+	t_string	*dst;
+	char		*value;
 
-    value = NULL;
-    v_glob.g_expand_dq = 0;
-    dst = new_string("");
-    (*i)++;
-    while(str[(*i)] && (ft_isalnum(str[(*i)]) || str[*i] == '_'))
-    {
-        dst = str_append(dst, str[(*i)]);
-        (*i)++;
-    }
-    if (find_value_with_key(menv, dst->content) != NULL)
-    {
-        value = find_value_with_key(menv, dst->content);
-        return (value);
-    }
-    else
-    {
-        v_glob.g_expand_dq = 1;
-        return (ft_substr(str, *i, ft_strlen(str)));
-    }
-    return (NULL);
+	value = NULL;
+	v_glob.g_expand_dq = 0;
+	dst = new_string("");
+	(*i)++;
+	while (str[(*i)] && (ft_isalnum(str[(*i)]) || str[*i] == '_'))
+	{
+		dst = str_append(dst, str[(*i)]);
+		(*i)++;
+	}
+	if (find_value_with_key(menv, dst->content) != NULL)
+	{
+		value = find_value_with_key(menv, dst->content);
+		return (value);
+	}
+	else
+	{
+		v_glob.g_expand_dq = 1;
+		return (ft_substr(str, *i, ft_strlen(str)));
+	}
+	return (NULL);
 }
 
-char *get_kw(t_env *menv,char *str,int *i)
+char	*get_kw(t_env *menv, char *str, int *i)
 {
-    t_string *dst;
-    char *value;
+	t_string	*dst;
+	char		*value;
 
-    value = NULL;
-    dst = new_string("");
-    (*i)++;
-    while(str[(*i)] && str[(*i)] != ' ' && str[(*i)] != '\'')
-    {
-        dst = str_append(dst, str[(*i)]);
-        (*i)++;
-    }
-    if (find_value_with_key(menv, dst->content) != NULL)
-    {
-        value = find_value_with_key(menv, dst->content);
-        return (value);
-    }
-    return (NULL);
+	value = NULL;
+	dst = new_string("");
+	(*i)++;
+	while (str[(*i)] && str[(*i)] != ' ' && str[(*i)] != '\'')
+	{
+		dst = str_append(dst, str[(*i)]);
+		(*i)++;
+	}
+	if (find_value_with_key(menv, dst->content) != NULL)
+	{
+		value = find_value_with_key(menv, dst->content);
+		return (value);
+	}
+	return (NULL);
 }
 
-t_string *expand_path_dq(t_env *menv,t_string *dst)
+t_string	*expand_path_dq(t_env *menv, t_string *dst)
 {
-    char	*word;
-    int     i;
-    t_string *key;
-    t_string *str = NULL;
+	char		*word;
+	int			i;
+	t_string	*key;
+	t_string	*str;
 
-    i = 0;
+	i = 0;
+	str = NULL;
 	key = new_string(NULL);
-    str = new_string("");
-    word = ((t_string *)dst)->content;
-    if (v_glob.expand_heredoc == 1)
-    {
-        v_glob.expand_heredoc = 0;
-        return (dst);
-    }
-    while(word[i] != '\0' && i < (int)((t_string *)dst)->size)
-    {
-        if(word[i]== '$' && ft_strchr("\0\r\t\f\v ", word[i + 1]))
-            return (str_append(str, '$'));
-        else if (word[i]== '$')
-        {
-            key->content = get_kw_dq(menv,word, &i);
-            if(key->content == NULL)
-                return (free_string(&str) , new_string(""));
-            if (v_glob.g_expand_dq == 1)
-                return (v_glob.g_expand_dq = 0, str_concate(str,key->content));
-            str = str_concate(str, ((const char *)key->content));
-            if (!ft_strchr("\r\t\0\f\v|><\"",word[i]))
-                str = str_append(str, word[i]);
-        }
-        else
-            str = str_append(str, word[i]);
-        i++;
-    }
-    return (str);
+	str = new_string("");
+	word = ((t_string *)dst)->content;
+	if (v_glob.expand_heredoc == 1)
+	{
+		v_glob.expand_heredoc = 0;
+		return (dst);
+	}
+	while (word[i] != '\0' && i < (int)((t_string *)dst)->size)
+	{
+		if (word[i] == '$' && ft_strchr("\0\r\t\f\v ", word[i + 1]))
+			return (str_append(str, '$'));
+		else if (word[i] == '$')
+		{
+			key->content = get_kw_dq(menv, word, &i);
+			if (key->content == NULL)
+				return (free_string(&str), new_string(""));
+			if (v_glob.g_expand_dq == 1)
+				return (v_glob.g_expand_dq = 0, str_concate(str, key->content));
+			str = str_concate(str, ((const char *)key->content));
+			if (!ft_strchr("\r\t\0\f\v|><\"", word[i]))
+				str = str_append(str, word[i]);
+		}
+		else
+			str = str_append(str, word[i]);
+		i++;
+	}
+	return (str);
 }
 
 // t_string *expand_path(t_env *menv,t_string *dst)
