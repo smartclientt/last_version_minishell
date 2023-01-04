@@ -24,6 +24,7 @@ void	minishell_loop(t_env **menv)
 	t_list	*tokens;
 	t_list	*cmds;
 	v_glob.exit_status = 0;
+	v_glob.expand_heredoc = 0;
 	while (1)
 	{
 		rl_catch_signals = 0;
@@ -53,7 +54,7 @@ void	minishell_loop(t_env **menv)
 		else
 		{
        		tokens = ft_lst_del_first(tokens);
-			cmds = get_cmds(tokens);
+			cmds = get_cmds(tokens, *menv);
 			if(!v_glob.heredoc_exit)
 				continue;
 			// print_list(cmds);

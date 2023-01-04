@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   some_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 00:41:44 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/03 06:29:58 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/03 22:47:38 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_cmd   *new_cmd(char **args, t_list *redirs)
     return (cmd);
 }
 
-void    ft_gets(t_list **tp, t_list **red_list)
+void    ft_gets(t_list **tp, t_list **red_list, t_env *menv)
 {
     t_list *tmp;
     
@@ -50,7 +50,7 @@ void    ft_gets(t_list **tp, t_list **red_list)
     {
         if (((t_token *)tmp->content)->type == TOK_DRINPUT)
             ft_lstadd_back(red_list, new_node(new_red(ft_heredocs(
-                ((t_token *)tmp->next->content)->value)
+                ((t_token *)tmp->next->content)->value, menv)
                 , ((t_token *)tmp->content)->type)));
         else
             ft_lstadd_back(red_list, new_node(new_red(
@@ -61,7 +61,7 @@ void    ft_gets(t_list **tp, t_list **red_list)
     *tp = tmp;
 }
 
-void    ft_get_cmds(t_list **tokens, t_list **red_list, t_vector **arg)
+void    ft_get_cmds(t_list **tokens, t_list **red_list, t_vector **arg, t_env *menv)
 {
     t_list *tmp;
 
@@ -76,12 +76,12 @@ void    ft_get_cmds(t_list **tokens, t_list **red_list, t_vector **arg)
             *arg = vec_append(*arg, ((t_token *)tmp->content)->value);
             tmp = tmp->next;
         }
-        ft_gets(&tmp, red_list);
+        ft_gets(&tmp, red_list, menv);
     }
     *tokens = tmp;
 }
 
-t_list  *get_cmds(t_list *tokens)
+t_list  *get_cmds(t_list *tokens, t_env *menv)
 {
     t_list *tmp;
     t_list  *cmds;
@@ -95,7 +95,7 @@ t_list  *get_cmds(t_list *tokens)
     {
         red_list = NULL;
         arg = new_vector(NULL);
-        ft_get_cmds(&tmp, &red_list, &arg);
+        ft_get_cmds(&tmp, &red_list, &arg, menv);
         ft_lstadd_back(&cmds, new_node(
             new_cmd(arg->content, red_list)));
         if (tmp->next == NULL)

@@ -4,7 +4,8 @@ int	check_rules(e_token prv, e_token cur)
 {
 	return ((cur == TOK_PIPE && prv == TOK_START)
 		|| (cur == TOK_EOL && (prv != TOK_WORD && prv != TOK_DQUOTE && prv != TOK_SINQTE))
-		|| ((prv != TOK_WORD && prv != TOK_DQUOTE && prv != TOK_SINQTE && prv != TOK_START
+		|| ((prv != TOK_WORD && prv != TOK_DQUOTE 
+		&& prv != TOK_SINQTE && prv != TOK_START && prv != TOK_PIPE
 		&& cur != TOK_WORD && cur != TOK_DQUOTE && cur != TOK_SINQTE)));
 }
 

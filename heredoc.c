@@ -22,7 +22,7 @@ void	exit_herdoc(int sig)
 	exit(130);
 }
 
-char	*ft_heredocs(char *file)
+char	*ft_heredocs(char *file, t_env *menv)
 {
 	t_string	*input;
 	char		*buffer;
@@ -39,6 +39,8 @@ char	*ft_heredocs(char *file)
 		free(buffer);
 	}
 	free(file);
+	if (find_dollar(((t_string *)input)->content) == 1)
+        input = expand_path_dq(menv,input);
 	result = ((t_string *)input)->content;
 	return (result);
 }

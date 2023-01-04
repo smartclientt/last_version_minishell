@@ -75,6 +75,11 @@ t_string *expand_path_dq(t_env *menv,t_string *dst)
 	key = new_string(NULL);
     str = new_string("");
     word = ((t_string *)dst)->content;
+    if (v_glob.expand_heredoc == 1)
+    {
+        v_glob.expand_heredoc = 0;
+        return (dst);
+    }
     while(word[i] != '\0' && i < (int)((t_string *)dst)->size)
     {
         if(word[i]== '$' && ft_strchr("\0\r\t\f\v ", word[i + 1]))

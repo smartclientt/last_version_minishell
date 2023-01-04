@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:42 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/03 02:04:30 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/04 00:55:16 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_env
 typedef struct s_glob
 {
 	int	exit_status;
+	int	expand_heredoc;
 	int g_expand_dq;
 	int	heredoc_exit;
 }				t_glob;
@@ -109,7 +110,7 @@ void	create_if_no_env(t_env **menv);
 void	print_env(t_env *menv);
 char	*find_value_with_key(t_env *menv, char *key);
 t_env	*find_key_node(t_env *menv, char *key);
-char	*ft_heredocs(char *file);
+char	*ft_heredocs(char *file, t_env *menv);
 int		execute_red(t_list *cmds, t_list *red, t_env **menv);
 
 // builting commands
@@ -222,7 +223,7 @@ t_string *str_append(t_string *dst, char c);
 void free_string(t_string **str);
 
 // some function
-t_list  *get_cmds(t_list *tokens);
+t_list  *get_cmds(t_list *tokens, t_env *menv);
 t_redir *new_red(char *path, e_token type);
 t_cmd   *new_cmd(char **args, t_list *redirs);
 

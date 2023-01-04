@@ -32,10 +32,13 @@ t_string    *get_word(t_env *menv,char *str, int *i)
         dst = str_append(dst, str[*i]);
         (*i)++;
     }
-    if (find_dollar_status(dst->content))
-        dst = check_expand_status(dst);
-    else if (find_dollar(((t_string *)dst)->content) == 1)
-        dst = expand_path_dq(menv,dst);
+    while (find_dollar(((t_string *)dst)->content) == 1)
+    {
+        if (find_dollar_status(dst->content))
+            dst = check_expand_status(dst);
+        else if (find_dollar(((t_string *)dst)->content) == 1)
+            dst = expand_path_dq(menv,dst);
+    }
     if (!dst->content)
         return (NULL);
     return (dst);
@@ -154,7 +157,10 @@ void    add_tokens_with(t_list **tokens, char *str, int *i)
     if (str[(*i) + 1] == '>' || str[(*i) + 1] == '<')
     {
         if (str[(*i)] == '<' && str[(*i) + 1] == '<')
+        {
             ft_lstadd_back(tokens, new_node(new_token("<<", TOK_DRINPUT)));
+            v_glob.expand_heredoc = 1;
+        }
         else if (str[(*i)] == '>' && str[(*i) + 1] == '>')
             ft_lstadd_back(tokens, new_node(new_token(">>", TOK_DROUTPUT)));
         (*i) +=2;
@@ -199,7 +205,7 @@ t_list  *get_tokens(char *str , t_env *menv)
     if (str == NULL)
         return (NULL);
     if (check_quotes(str))
-        exit (1);
+        return (0);
     while (str[i] != '\0' && i < (int)ft_strlen(str))
     {
         while(str[i] == ' ' || str[i] == '\t' || str[i] == '\r' 
