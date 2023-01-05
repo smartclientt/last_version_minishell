@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_string.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 11:39:20 by yelousse          #+#    #+#             */
-/*   Updated: 2023/01/05 13:08:14 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 22:27:32 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_string	*new_string(const char *str)
 	{
 		new->size = ft_strlen(str);
 		new->content = (char *)malloc((new->size + 1) * sizeof(char));
-		strncpy(new->content, str, new->size + 1);
+		ft_strncpy(new->content, str, new->size + 1);
 	}
 	return (new);
 }
@@ -47,8 +47,8 @@ t_string	*str_concate(t_string *dst, char *str)
 		return (dst);
 	}
 	if (dst->content)
-		strncpy(tmp_content, dst->content, tmp_size + 1);
-	strncat(tmp_content, str, tmp_size + 1);
+		ft_strncpy(tmp_content, dst->content, tmp_size + 1);
+	ft_strncat(tmp_content, str, tmp_size + 1);
 	free_string(&dst);
 	dst = new_string(NULL);
 	dst->content = tmp_content;
@@ -70,7 +70,7 @@ t_string	*str_apend(t_string *dst, char c)
 		return (dst);
 	}
 	if (dst->content)
-		strncpy(tmp_content, dst->content, tmp_size + 1);
+		ft_strncpy(tmp_content, dst->content, tmp_size + 1);
 	tmp_content[tmp_size - 1] = c;
 	tmp_content[tmp_size] = '\0';
 	free_string(&dst);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_exit_status.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 10:58:42 by yelousse          #+#    #+#             */
-/*   Updated: 2023/01/05 12:06:28 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:33:43 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,3 @@ t_string	*check_expand_status(t_string *dst)
 {
 	return (add_expand(dst));
 }
-
-// t_list *expand_exit_status(t_list *tokens)
-// {
-//     t_list  *tmp;
-
-//     tmp = tokens;
-//     while (tmp && ((t_token *)tmp->content)->type != TOK_EOL)
-//     {
-//         check_expand(tmp);
-//         tmp = tmp->next;
-//     }
-//     return (tokens);
-// }

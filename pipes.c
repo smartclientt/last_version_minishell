@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:16:50 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 12:06:28 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:50:05 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	wait_exit_status(t_tools *tools)
 		;
 	if (WIFEXITED(g_glob.exit_status))
 		WEXITSTATUS(g_glob.exit_status);
+	g_glob.exit_status = g_glob.exit_status % 255;
 }
 
 void	multi_pipes(t_env **menv, t_list *cmds, int cmd_nbr)

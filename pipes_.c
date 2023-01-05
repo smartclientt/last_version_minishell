@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 22:22:18 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 12:08:21 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 21:06:55 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,20 @@ void	last_cmd(int fd[2], int prev_in, int prev_out)
 	close(prev_in);
 }
 
+int	returned_exit_status(int status)
+{
+	if (WIFEXITED(status))
+		WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		if (status == 2)
+			return (ft_printf(2, "\n"), 130);
+		if (status == 3)
+			return (ft_printf(2, "Quit: 3\n"), 131);
+	}
+	return (status % 255);
+}
+
 int	exec_no_builted(t_env **menv, char **cmd)
 {
 	int	id;
@@ -67,14 +81,5 @@ int	exec_no_builted(t_env **menv, char **cmd)
 			exit(127);
 	}
 	waitpid(id, &status, 0);
-	if (WIFEXITED(status))
-		WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-	{
-		if (status == 2)
-			ft_printf(2, "\n");
-		if (status == 3)
-			ft_printf(2, "Quit: 3\n");
-	}
-	return (status % 255);
+	return (returned_exit_status(status));
 }

@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 11:51:27 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 12:09:34 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 21:01:54 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	event(void)
+{
+	return (0);
+}
 
 void	signal_handler(int sig)
 {

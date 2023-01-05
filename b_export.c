@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_export.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:49:18 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 12:24:22 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 21:27:57 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,7 @@ char	*get_key_plus(char *env)
 	return (key);
 }
 
-void	join_env_value(t_env **menv, char *key, char *new_value)
-{
-	t_env	*update;
-	char	*join_value;
-
-	update = find_key_node(*menv, key);
-	join_value = ft_strjoin(update->value, new_value);
-	free(new_value);
-	free(update->value);
-	update->value = join_value;
-}
-
-void	b_export_(t_env **menv, char **args, int i)
+void	b_export__(t_env **menv, char **args, int i)
 {
 	if (check_export_args(args[i]) == 0)
 		ft_printf(2, "minishell: export: `%s': not a valid identifier\n",
@@ -91,7 +79,11 @@ void	b_export_(t_env **menv, char **args, int i)
 	else if (check_export_args(args[i]) == 4
 		&& find_key_node(*menv, get_key_plus(args[i])))
 		join_env_value(menv, get_key_plus(args[i]), get_value(args[i]));
-	else if (check_export_args(args[i]) == 1
+}
+
+void	b_export_(t_env **menv, char **args, int i)
+{
+	if (check_export_args(args[i]) == 1
 		&& !find_key_node(*menv, get_key(args[i])))
 		env_add_end(menv, env_node(ft_strdup(args[i]),
 				ft_strdup("")));

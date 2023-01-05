@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 22:27:09 by shbi              #+#    #+#             */
-/*   Updated: 2021/11/21 22:36:57 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 20:40:30 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	str = (char **)malloc(sizeof(char *) * count_str(s, c) + 1);
+	str = (char **)malloc(sizeof(char *) * (count_str(s, c) + 1));
 	if (!str)
 		return (NULL);
 	i = -1;

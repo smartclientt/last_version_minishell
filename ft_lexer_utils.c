@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:31:59 by yelousse          #+#    #+#             */
-/*   Updated: 2023/01/05 20:20:24 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 21:32:14 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@ t_string	*get_word_dq(t_env *menv, char *str, int *i)
 		dst = str_apend(dst, str[*i]);
 		(*i)++;
 	}
-	if (find_dollar_status(dst->content))
-		dst = check_expand_status(dst);
-	else if (find_dollar(((t_string *)dst)->content) == 1)
-		dst = expand_path_dq(menv, dst, 0);
+	if (g_glob.expand_heredoc == 0)
+	{
+		if (find_dollar_status(dst->content))
+			dst = check_expand_status(dst);
+		else if (find_dollar(((t_string *)dst)->content) == 1)
+			dst = expand_path_dq(menv, dst, 0);
+	}
 	(*i)++;
 	return (dst);
 }
@@ -58,13 +61,15 @@ t_string	*get_word(t_env *menv, char *str, int *i)
 		dst = str_apend(dst, str[*i]);
 		(*i)++;
 	}
-	while (find_dollar(((t_string *)dst)->content) == 1)
+	while (find_dollar(((t_string *)dst)->content) == 1
+		&& !g_glob.expand_heredoc)
 	{
 		if (find_dollar_status(dst->content))
 			dst = check_expand_status(dst);
 		else if (find_dollar(((t_string *)dst)->content) == 1)
 			dst = expand_path_dq(menv, dst, 0);
 	}
+	g_glob.expand_heredoc = 0;
 	if (!dst->content)
 		return (free_string(&dst), NULL);
 	return (dst);

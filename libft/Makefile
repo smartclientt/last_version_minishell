@@ -6,7 +6,7 @@
 #    By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 19:08:56 by ael-idri          #+#    #+#              #
-#    Updated: 2022/12/25 20:06:23 by shbi             ###   ########.fr        #
+#    Updated: 2023/01/05 22:26:17 by shbi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,4 +82,4 @@ bonus: $(OBJ_B)
 
 re: fclean $(NAME)
 
-.PHONY = all clean fclean re bonus
+.PHONY : all clean fclean re bonus

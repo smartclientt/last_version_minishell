@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_tools_.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:48:49 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 12:23:17 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:30:16 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,23 @@ void	print_env(t_env *menv)
 		}
 		menv = menv->next;
 	}
+}
+
+char	*update_shellvl(char *shellvl)
+{
+	int	nbr_lvl;
+	int	i;
+
+	i = 0;
+	while (shellvl[i] && ft_isalnum(shellvl[i]))
+		i++;
+	if (!shellvl[i])
+	{
+		nbr_lvl = ft_atoi(shellvl) + 1;
+		free(shellvl);
+		return (ft_itoa(nbr_lvl));
+	}
+	return (shellvl);
 }
 
 char	*find_value_with_key(t_env *menv, char *key)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:42 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 20:02:52 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 22:20:47 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ char		*find_value_with_key(t_env *menv, char *key);
 t_env		*find_key_node(t_env *menv, char *key);
 char		*ft_heredocs(char *file, t_env *menv);
 int			execute_red(t_list *cmds, t_list *red, t_env **menv);
+char		*update_shellvl(char *shellvl);
 
 // builting commands
 int			b_echo(char **arg, int fd);
@@ -128,6 +129,7 @@ int			exec_builted(t_env **menv, char **args);
 
 int			b_export(t_env **menv, char **args);
 void		b_export_(t_env **menv, char **args, int i);
+void		b_export__(t_env **menv, char **args, int i);
 void		new_env_value(t_env **menv, char *key, char *new_value);
 int			cmp_key(char *s1, char *s2);
 int			env_size(t_env *lst);
@@ -170,9 +172,11 @@ void		pipe_logic(t_env **menv, t_list *tmp, t_tools *tools, int i);
 int			exec_no_builted(t_env **menv, char **cmd);
 void		init_tools_variables(t_tools *tools, int cmd_nbr);
 void		wait_exit_status(t_tools *tools);
+int			returned_exit_status(int status);
 
 // check cmds if valid
 int			check_access_path(char *path);
+char		*cmd_is_not_path(t_env *menv, char *cmd);
 void		free_path_env(char **path_env);
 int			cmd_is_path(char *cmd);
 char		*check_cmd_access(t_env *menv, char *cmd);
@@ -188,9 +192,16 @@ void		one_red_output(t_list *cmds, t_list *red, t_env **menv);
 void		double_red_output(t_list *cmds, t_list *red, t_env **menv);
 // minishell loop
 void		minishell_loop(t_env **menv);
+void		init_global_var(void);
+void		signal_loop(void);
+void		print_exit(void);
+void		all_free_loop(char	*line, t_list **tokens, t_list **cmds);
+void		after_check_grammer(t_env **menv, t_list **tokens, t_list **cmds);
+void		minishell(t_env **menv, char *line, t_list **tokens, t_list **cmds);
 
 // signals
 void		signal_handler(int sig);
+int			event(void);
 
 t_token		*new_token(char *value, enum e_token type);
 t_list		*new_node(void *content);

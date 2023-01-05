@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_tools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 05:45:34 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 19:59:11 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:30:05 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,23 +91,6 @@ char	*get_value(char *env)
 	}
 	value[i] = '\0';
 	return (value);
-}
-
-char	*update_shellvl(char *shellvl)
-{
-	int	nbr_lvl;
-	int	i;
-
-	i = 0;
-	while (shellvl[i] && ft_isalnum(shellvl[i]))
-		i++;
-	if (!shellvl[i])
-	{
-		nbr_lvl = ft_atoi(shellvl) + 1;
-		free(shellvl);
-		return (ft_itoa(nbr_lvl));
-	}
-	return (shellvl);
 }
 
 void	fill_env(t_env **menv, char **env)
