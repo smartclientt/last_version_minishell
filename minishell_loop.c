@@ -48,21 +48,23 @@ void	minishell_loop(t_env **menv)
 		free(line);
 		if (!tokens || !check_grammar(tokens))
 		{
-			// v_glob.exit_status = 2;
-		//lst_del(&token_lst, token_del);
-			free_tokens(tokens);
+			v_glob.exit_status = 2;
+		// lst_del(&token_lst, token_del);
+			// free_tokens(tokens);
 		}
 		else
 		{
        		tokens = ft_lst_del_first(tokens);
 			cmds = get_cmds(tokens, *menv);
-			free_tokens(tokens);
+			// system("leaks minishell");
+			// free_tokens(tokens);
 			if(!v_glob.heredoc_exit)
 				continue;
 			// print_list(cmds);
 			signal(SIGINT, SIG_IGN);
 			execution(menv, cmds, ft_lstsize(cmds));
-			free_cmds(cmds);
 		}
+			free_cmds(cmds);
+			free_tokens(tokens);
 	}
 }

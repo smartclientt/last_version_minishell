@@ -19,6 +19,7 @@ t_string    *add_expand(t_string *dst)
     t_string *str;
     char *word;
     int     i;
+    char *tmp;
 
     i = 0;
     str = new_string("");
@@ -27,7 +28,9 @@ t_string    *add_expand(t_string *dst)
     {
         if (word[i]== '$' && word[i + 1] == '?')
         {
-            str = str_concate(str, ((const char *)ft_itoa(v_glob.exit_status % 255)));
+            tmp = ft_itoa(v_glob.exit_status % 255);
+            str = str_concate(str, tmp);
+            free(tmp);
             i++;
         }
         else

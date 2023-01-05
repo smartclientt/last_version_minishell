@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 09:29:45 by yelousse          #+#    #+#             */
-/*   Updated: 2023/01/05 01:15:25 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 06:24:04 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ char	*get_kw_dq(t_env *menv, char *str, int *i)
 	if (find_value_with_key(menv, dst->content) != NULL)
 	{
 		value = find_value_with_key(menv, dst->content);
-		return (value);
+		printf("hello there \n");
+		return (free_string(&dst) ,value);
 	}
 	else
 	{
@@ -112,7 +113,7 @@ t_string	*expand_path_dq(t_env *menv, t_string *dst)
 			str = str_append(str, word[i]);
 		i++;
 	}
-	return (free_string(&dst), free_string(&key), str);
+	return (free_string(&dst), free(key), str);
 }
 
 // t_string *expand_path(t_env *menv,t_string *dst)

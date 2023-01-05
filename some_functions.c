@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   some_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 00:41:44 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/04 06:25:07 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 05:41:19 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_redir *new_red(char *path, e_token type)
     redir = (t_redir *)malloc(sizeof(t_redir));
     if (redir == NULL)
         return (NULL);
-    redir->filepath = path;
+    redir->filepath = ft_strdup(path);
     redir->type = type;
     return (redir);
 }
@@ -61,7 +61,7 @@ void    ft_gets(t_list **tp, t_list **red_list, t_env *menv)
 
 void    ft_get_cmds(t_list **tokens, t_list **red_list, t_vector **arg, t_env *menv)
 {
-    t_list *tmp;
+    t_list      *tmp;
 
     tmp = *tokens;
     while (((t_token *)tmp->content)->type != TOK_PIPE 
@@ -71,7 +71,7 @@ void    ft_get_cmds(t_list **tokens, t_list **red_list, t_vector **arg, t_env *m
         || ((t_token *)tmp->content)->type == TOK_DQUOTE 
         || ((t_token *)tmp->content)->type == TOK_SINQTE)
         {
-            *arg = vec_append(*arg, ((t_token *)tmp->content)->value);
+            vec_append(*arg, ((t_token *)tmp->content)->value);
             tmp = tmp->next;
         }
         ft_gets(&tmp, red_list, menv);
@@ -81,6 +81,7 @@ void    ft_get_cmds(t_list **tokens, t_list **red_list, t_vector **arg, t_env *m
 
 t_list  *get_cmds(t_list *tokens, t_env *menv)
 {
+    (void)menv;
     t_list *tmp;
     t_list  *cmds;
     t_list  *red_list;
@@ -96,6 +97,7 @@ t_list  *get_cmds(t_list *tokens, t_env *menv)
         ft_get_cmds(&tmp, &red_list, &arg, menv);
         ft_lstadd_back(&cmds, new_node(
             new_cmd(arg->content, red_list)));
+        free(arg);
         if (tmp->next == NULL)
             break;
         tmp = tmp->next;

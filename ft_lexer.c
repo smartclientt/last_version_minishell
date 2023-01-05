@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 09:00:57 by yelousse          #+#    #+#             */
-/*   Updated: 2023/01/05 01:18:51 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 06:10:47 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,10 @@ char	*again(t_env *menv, char *str, int *i)
 {
 	char		*ret;
 	t_string	*dst;
+	char		*tmp;
 
-	ret = "";
+	tmp = ft_strdup("");
+	ret = NULL;
 	dst = NULL;
 	while (!ft_strchr("\r\t\f\v>< \0", str[*i]) && str[*i] != '|'
 		&& (*i) < ((int)ft_strlen(str)) && str[*i] != ' ')
@@ -89,11 +91,14 @@ char	*again(t_env *menv, char *str, int *i)
 			dst = get_word_sq(menv, str, i);
 		else
 			dst = get_word(menv, str, i);
+		// printf("%s\t%p\t%p\N",dst->content, dst->content, dst);
         // if (dst == NULL)
         //     return (NULL);
 		if (dst && dst->content)
-			ret = ft_strjoin(ret, ((t_string *)dst)->content);
+			ret = ft_strjoin(tmp, ((t_string *)dst)->content);
 		free_string(&dst);
+		free(tmp);
+		tmp = ret;
 	}
 	return (free_string(&dst), ret);
 }
@@ -156,6 +161,7 @@ void	token_word(t_env *menv, t_list **tokens, char *str, int *i)
 	if (w == NULL)
 		return ;
 	ft_lstadd_back(tokens, new_node(new_token(w, TOK_WORD)));
+	free(w);
 }
 
 void	add_tokens_with(t_list **tokens, char *str, int *i)
@@ -188,12 +194,14 @@ void	add_tokens(t_env *menv, t_list **tokens, char *str, int *i)
 {
 	char	*w;
 
+	w = NULL;
 	if (ft_strchr("|<>", str[*i]) && str[*i] != '\0')
 		add_tokens_with(tokens, str, i);
 	else if (str[(*i)] == '\'')
 	{
+		w = new_word_v2(menv, str, i);
 		ft_lstadd_back(tokens, new_node(new_token(
-					new_word_v2(menv, str, i), TOK_SINQTE)));
+					w, TOK_SINQTE)));
 	}
 	else if (str[(*i)] == '"')
 	{
@@ -202,6 +210,7 @@ void	add_tokens(t_env *menv, t_list **tokens, char *str, int *i)
 	}
 	else
 		token_word(menv, tokens, str, i);
+	free(w);
 }
 
 t_list	*get_tokens(char *str ,t_env *menv)

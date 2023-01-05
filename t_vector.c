@@ -70,8 +70,9 @@ t_vector *vec_append(t_vector *vec, const char *str)
 	{	tmp_content[i][j] = str[j];
 		j++;}
 	tmp_content[tmp_size] = NULL;
-	free_vec(&vec);
-	vec = new_vector(NULL);
+	// free_vec(&vec);
+	// vec = new_vector(NULL);
+	free_array_2d(vec->content);
 	vec->content = tmp_content;
 	vec->size = tmp_size;
 	return (vec);

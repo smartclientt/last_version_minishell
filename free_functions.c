@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 22:11:40 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 00:58:22 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 05:37:04 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	free_redir(t_list *redir)
 		next = redir->next;
 		free(((t_redir *)redir->content)->filepath);
 		free((t_redir *)redir->content);
+		free(redir);
 		redir = next;
 	}
 }
@@ -66,7 +67,8 @@ void	free_cmds(t_list *cmds)
 		next = cmds->next;
 		free_array_2d(((t_cmd *)cmds->content)->args);
 		free_redir(((t_cmd *)cmds->content)->redirs);
-		free(((t_cmd *)cmds));
+		free(((t_cmd *)cmds->content));
+		free(cmds);
 		cmds = next;
 	}
 }
@@ -81,6 +83,7 @@ void	free_tokens(t_list *tokens)
 		next = tokens->next;
 		free(((t_token *)tokens->content)->value);
 		free((t_token *)tokens->content);
+		free(tokens);
 		tokens = next;
 	}
 }
