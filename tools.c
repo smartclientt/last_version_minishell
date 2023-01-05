@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 03:39:11 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 20:06:08 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 23:05:32 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	check_quotes(char *str)
 	}
 	if ((sq % 2) == 1 || (dq % 2) == 1)
 	{
-		write(2, "Error, unclosed quotes!\n", 24);
+		write(2, "Error, unclosed quotes!\n", 25);
 		return (1);
 	}
 	return (0);

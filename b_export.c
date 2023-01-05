@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:49:18 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 21:27:57 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 22:45:31 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	b_export__(t_env **menv, char **args, int i)
 
 void	b_export_(t_env **menv, char **args, int i)
 {
+	b_export__(menv, args, i);
 	if (check_export_args(args[i]) == 1
 		&& !find_key_node(*menv, get_key(args[i])))
 		env_add_end(menv, env_node(ft_strdup(args[i]),

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_grammar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:22:15 by yelousse          #+#    #+#             */
-/*   Updated: 2023/01/05 19:46:20 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 23:06:32 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,15 @@ int	check_only_red(t_list *ptr)
 			&& ((t_token *)ptr->next->next->content)->type == TOK_EOL)
 		{
 			if (((t_token *)ptr->next->content)->type == TOK_PIPE)
-				write(2, "minishell: syntax \
-				error near unexpected token `|'\n", 50);
+			{
+				write(2, "minishell: syntax ", 19);
+				write(2, "error near unexpected token `|'\n", 33);
+			}
 			else
-				write(2, "minishell: syntax error \
-				near unexpected token `newline'\n", 56);
+			{
+				write(2, "minishell: syntax error", 24);
+				write(2, "near unexpected token `newline'\n", 33);
+			}
 			return (0);
 		}
 	}
@@ -59,7 +63,7 @@ void	check_rul(t_token *prv, t_token *cur)
 		p = prv->value;
 		len = ft_strlen((const char *)((t_token *)prv->value));
 	}
-	write(2, "minishell: syntax error near unexpected token `", 47);
+	write(2, "minishell: syntax error near unexpected token `", 48);
 	write(2, p, len);
 	write(2, "'\n", 2);
 }

@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 10:58:42 by yelousse          #+#    #+#             */
-/*   Updated: 2023/01/05 20:33:43 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 23:26:22 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_string	*add_expand(t_string *dst)
 	{
 		if (word[i] == '$' && word[i + 1] == '?')
 		{
-			tmp = ft_itoa(g_glob.exit_status % 255);
+			tmp = ft_itoa(g_glob.exit_status);
 			str = str_concate(str, tmp);
 			free(tmp);
 			i++;
