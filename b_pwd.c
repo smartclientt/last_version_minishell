@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   b_pwd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:21:22 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/02 03:42:43 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 12:23:51 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		b_pwd(t_env	*menv)
+int	b_pwd(t_env	*menv)
 {
 	t_env	*pwd_node;
 	char	pwd[PATH_MAX];

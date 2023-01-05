@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_cd.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/20 04:21:36 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/02 03:41:52 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 12:25:46 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,20 +85,14 @@ int	b_cd(t_env **menv, char *path)
 		else
 		{
 			if (getcwd(buffer, PATH_MAX) == NULL)
-			{
-				cd_home(menv);
-				return (1);
-			}
+				return (cd_home(menv), 1);
 			else if (chdir(path) == -1)
 			{
 				perror("minishell: cd: ");
 				return (1);
 			}
 			else
-			{
-				new_pwd_and_oldpwd(menv);
-				return (0);
-			}
+				return (new_pwd_and_oldpwd(menv), 0);
 		}
 	}
 	return (1);

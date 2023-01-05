@@ -1,24 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/05 11:00:13 by yelousse          #+#    #+#             */
+/*   Updated: 2023/01/05 12:06:28 by yelousse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-// int ft_heredoc(char *file)
-// {
-//     int fd;
-//     char *line;
-
-//     fd = open("/tmp/tmpfile", O_RDWR | O_CREAT);
-//     while (1)
-//     {
-//         line =  readline(1);
-//         if (ft_strncmp(line, file, ft_strlen(line) + 1));
-//             break;
-//         write(fd, line, ft_strlen(line) + 1);
-//     }
-//     return (fd);
-// }
 void	exit_herdoc(int sig)
 {
 	(void)sig;
-	v_glob.heredoc_exit = 0;
+	g_glob.heredoc_exit = 0;
 	exit(130);
 }
 
@@ -27,42 +24,25 @@ char	*ft_heredocs(char *file, t_env *menv)
 	t_string	*input;
 	char		*buffer;
 	char		*result;
+	t_string	*tmp;
 
 	input = new_string("");
 	while (1)
 	{
+		tmp = input;
 		buffer = readline("> ");
-		if (!buffer || ft_strncmp(buffer, file, ft_strlen(file) + 1) == 0 || !v_glob.heredoc_exit)
+		if (!buffer || ft_strncmp(buffer, file, ft_strlen(file) + 1) == 0
+			|| !g_glob.heredoc_exit)
+		{
+			free(buffer);
 			break ;
-		input = str_concate(input, buffer);
-		input = str_append(input, '\n');
+		}
+		tmp = str_concate(tmp, buffer);
+		input = str_apend(tmp, '\n');
 		free(buffer);
 	}
-	free(file);
 	if (find_dollar(((t_string *)input)->content) == 1)
-        input = expand_path_dq(menv,input);
+		input = expand_path_dq(menv, input, 0);
 	result = ((t_string *)input)->content;
-	return (result);
+	return (free(input), result);
 }
-
-// void    check_heredoc(t_list *cmds)
-// {
-//     t_list *tmp;
-//     t_list  *red;
-
-//     tmp = cmds;
-//     while (tmp)
-//     {
-//         red = ((t_cmd *)tmp->content)->redirs;
-//         while(((t_redir *)red->content))
-//         {
-//             if(((t_redir *)red->content)->type == TOK_DRINPUT)
-//             {
-//                 ft_heredocs((const char *)((t_redir *)red->content)->filepath);
-//                 break;
-//             }
-//             red = red->next;
-//         }
-//         tmp = tmp->next;
-//     }
-// }

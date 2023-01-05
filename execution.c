@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 09:02:47 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/03 22:53:57 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 12:22:56 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	execution(t_env **menv, t_list *cmds, int cmd_nbr)
 
 	i = 0;
 	tmp = cmds;
-
 	while (i < cmd_nbr)
 	{
 		if (((t_cmd *)tmp->content)->args[0] == NULL)
@@ -50,7 +49,6 @@ void	execution(t_env **menv, t_list *cmds, int cmd_nbr)
 		tmp = tmp->next;
 		i++;
 	}
-	
 	if (cmd_nbr == 1 && is_builted(((t_cmd *)cmds->content)->args))
 		execute_red(cmds, ((t_cmd *)cmds->content)->redirs, menv);
 	else

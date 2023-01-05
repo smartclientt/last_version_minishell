@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 22:11:40 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 05:37:04 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 11:55:28 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,3 @@ void	free_tokens(t_list *tokens)
 		tokens = next;
 	}
 }
-
-
-// void ft_free(void **ptr)
-// {
-// 	if (*ptr)
-// 	{
-// 		free(*ptr);
-// 		*ptr = NULL;
-// 	}
-// }

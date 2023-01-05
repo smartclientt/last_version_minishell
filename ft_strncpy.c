@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_handler.c                                   :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/27 11:51:27 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 12:09:34 by yelousse         ###   ########.fr       */
+/*   Created: 2023/01/05 12:47:08 by yelousse          #+#    #+#             */
+/*   Updated: 2023/01/05 13:03:26 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	signal_handler(int sig)
+char	*ft_strncpy(char *dest, const char *src, unsigned int n)
 {
-	if (sig == SIGINT)
+	unsigned int	i;
+
+	i = 0;
+	while (i < n && src[i] != '\0')
 	{
-		if (!g_glob.heredoc_exit)
-		{
-			ft_putstr_fd("\n", 1);
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
-		}
-		else
-		{
-			rl_done = 1;
-			g_glob.heredoc_exit = 0;
-		}
+		dest[i] = src[i];
+		i++;
 	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
 }

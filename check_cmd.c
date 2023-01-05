@@ -6,23 +6,11 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:41:38 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 05:40:40 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 12:23:30 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-check if the cmd is a path or just simple cmd (check if theere is "/" in the array)
-if the cmd is a path : 
-	-	check access to the cmd
-	-	print error if it not accessible
-if the cmd is a simple cmd
-	-	search if it s exist in the PATH env
-		->	join the cmd with every path exist in the path
-			->	if the cmd exist try to check if it's accessible 
-			->	if not exist print error
-*/
 
 int	check_access_path(char *path)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_exit.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 22:38:59 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/02 02:59:35 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 12:24:44 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,11 @@ void	b_exit(char **args, t_env *menv)
 		else if (is_nbr(args[0]) && nbr_of_args(args) > 1)
 		{
 			ft_printf(2, "exit\nminishell: exit: too many arguments\n");
-			v_glob.exit_status = 1;
+			g_glob.exit_status = 1;
 			return ;
 		}
 	}
-	v_glob.exit_status = exit_status;
-	//neeed to free env and cmds and readline;
+	g_glob.exit_status = exit_status;
 	free_env(menv);
 	exit(exit_status);
 }

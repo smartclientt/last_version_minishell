@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 03:39:11 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/30 22:53:16 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 12:39:45 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_strcmp(char *s1, char *s2)
 
 	ps1 = s1;
 	ps2 = s2;
-
 	if (!ps1 && !ps2)
 		return (0);
 	if ((*ps1 && !*ps2) || (*ps2 && !*ps1))
@@ -34,20 +33,6 @@ int	ft_strcmp(char *s1, char *s2)
 	return (1);
 }
 
-// int	ft_strcmp(char *s1, char *s2)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (s1[i] && s2[i])
-// 	{
-// 		if (s1[i] != s2[i])
-// 			return (s1[i] - s2[i]);
-// 		i++;
-// 	}
-// 	return (s1[i] - s2[i]);
-// }
-
 char	*ft_free(char **s)
 {
 	if (*s)
@@ -56,4 +41,50 @@ char	*ft_free(char **s)
 		*s = NULL;
 	}
 	return (*s);
+}
+
+int	check_quotes(char *str)
+{
+	int	dq;
+	int	sq;
+	int	i;
+
+	i = 0;
+	sq = 0;
+	dq = 0;
+	while (str[i] && ((size_t)i < ft_strlen(str)))
+	{
+		ft_check_quotes_utils(str, &i, &sq, &dq);
+		i++;
+	}
+	if ((sq % 2) == 1 || (dq % 2) == 1)
+	{
+		write(2, "Error, unclosed quotes!\n", 24);
+		return (1);
+	}
+	return (0);
+}
+
+t_cmd	*new_cmd(char **args, t_list *redirs)
+{
+	t_cmd	*cmd;
+
+	cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);
+	cmd->args = args;
+	cmd->redirs = redirs;
+	return (cmd);
+}
+
+t_redir	*new_red(char *path, e_token type)
+{
+	t_redir	*redir;
+
+	redir = (t_redir *)malloc(sizeof(t_redir));
+	if (redir == NULL)
+		return (NULL);
+	redir->filepath = ft_strdup(path);
+	redir->type = type;
+	return (redir);
 }

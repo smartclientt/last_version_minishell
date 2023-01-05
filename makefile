@@ -6,15 +6,15 @@
 #    By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/18 01:50:38 by shbi              #+#    #+#              #
-#    Updated: 2023/01/05 00:50:02 by yelousse         ###   ########.fr        #
+#    Updated: 2023/01/05 13:21:23 by yelousse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
-SRCS		=	minishell.c														\
-				env_tools.c env_tools_.c tools.c								\
+SRCS		=	minishell.c				ft_lexer_utils.c						\
+				env_tools.c env_tools_.c tools.c expand_utils.c	ft_strncat.c	\
 				b_echo.c b_cd.c b_cd_.c b_env.c	b_pwd.c b_export.c b_unset.c	\
-				b_export_.c b_export__.c  b_exit.c pipes_.c						\
+				b_export_.c b_export__.c  b_exit.c pipes_.c		ft_strncpy.c	\
 				error_case.c pipes.c check_cmd.c execution.c exec_builted.c		\
 				minishell_loop.c redirection_execute.c signal_handler.c			\
 				expand_exit_status.c expand.c ft_grammar.c ft_lexer.c			\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_export.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:49:18 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/04 04:11:41 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 12:24:22 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	check_export_args(char *arg)
 		return (0);
 	else
 	{
-		while (arg[i] && arg[i] != '=' && ((arg[i] != '+' && arg[i + 1] != '=') || ft_isalpha(arg[i])
+		while (arg[i] && arg[i] != '=' && ((arg[i] != '+' && arg[i + 1] != '=')
+				|| ft_isalpha(arg[i])
 				|| ft_isdigit(arg[i]) || arg[i] == '_'))
 			i++;
 		if (!arg[i])
@@ -86,10 +87,10 @@ void	b_export_(t_env **menv, char **args, int i)
 		join_env_value(menv, get_key_plus(args[i]), ft_strdup(""));
 	else if (check_export_args(args[i]) == 4
 		&& !find_key_node(*menv, get_key_plus(args[i])))
-		env_add_end(menv, env_node(get_key_plus(args[i]),  get_value(args[i])));
+		env_add_end(menv, env_node(get_key_plus(args[i]), get_value(args[i])));
 	else if (check_export_args(args[i]) == 4
 		&& find_key_node(*menv, get_key_plus(args[i])))
-		join_env_value(menv, get_key_plus(args[i]),  get_value(args[i]));
+		join_env_value(menv, get_key_plus(args[i]), get_value(args[i]));
 	else if (check_export_args(args[i]) == 1
 		&& !find_key_node(*menv, get_key(args[i])))
 		env_add_end(menv, env_node(ft_strdup(args[i]),

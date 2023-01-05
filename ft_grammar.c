@@ -1,28 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_grammar.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/05 12:22:15 by yelousse          #+#    #+#             */
+/*   Updated: 2023/01/05 12:22:35 by yelousse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	check_rules(e_token prv, e_token cur)
 {
 	return ((cur == TOK_PIPE && prv == TOK_START)
-		|| (cur == TOK_EOL && (prv != TOK_WORD && prv != TOK_DQUOTE && prv != TOK_SINQTE))
-		|| ((prv != TOK_WORD && prv != TOK_DQUOTE 
-		&& prv != TOK_SINQTE && prv != TOK_START && prv != TOK_PIPE
-		&& cur != TOK_WORD && cur != TOK_DQUOTE && cur != TOK_SINQTE)));
+		|| (cur == TOK_EOL
+			&& (prv != TOK_WORD && prv != TOK_DQUOTE && prv != TOK_SINQTE))
+		|| ((prv != TOK_WORD && prv != TOK_DQUOTE
+				&& prv != TOK_SINQTE && prv != TOK_START && prv != TOK_PIPE
+				&& cur != TOK_WORD && cur != TOK_DQUOTE && cur != TOK_SINQTE)));
 }
 
 int	check_only_red(t_list *ptr)
 {
-
-	if(ft_lstsize(ptr) == 3)
+	if (ft_lstsize(ptr) == 3)
 	{
-		if (((t_token *)ptr->content)->type == TOK_START && ((t_token *)ptr->next->content)->type != TOK_WORD 
-			&& ((t_token *)ptr->next->content)->type != TOK_DQUOTE && ((t_token *)ptr->next->content)->type != TOK_SINQTE
+		if (((t_token *)ptr->content)->type == TOK_START
+			&& ((t_token *)ptr->next->content)->type != TOK_WORD
+			&& ((t_token *)ptr->next->content)->type != TOK_DQUOTE
+			&& ((t_token *)ptr->next->content)->type != TOK_SINQTE
 			&& ((t_token *)ptr->next->next->content)->type == TOK_EOL)
 		{
 			if (((t_token *)ptr->next->content)->type == TOK_PIPE)
-				write(2, "minishell: syntax error near unexpected token `|'\n", 50);
+				write(2, "minishell: syntax \
+				error near unexpected token `|'\n", 50);
 			else
-				write(2, "minishell: syntax error near unexpected token `newline'\n", 56);
-			return (0);		
+				write(2, "minishell: syntax error \
+				near unexpected token `newline'\n", 56);
+			return (0);
 		}
 	}
 	return (1);
@@ -30,8 +46,8 @@ int	check_only_red(t_list *ptr)
 
 void	check_rul(t_token *prv, t_token *cur)
 {
-	char *p;
-	int	len;
+	char	*p;
+	int		len;
 
 	if ((prv->type >= 3 && prv->type <= 6) || prv->type == TOK_START)
 	{
