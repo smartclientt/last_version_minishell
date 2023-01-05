@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:15:50 by yelousse          #+#    #+#             */
-/*   Updated: 2023/01/05 13:20:12 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:54:12 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	vec_append_utils(size_t *i, char **tmp_content, t_vector *vec)
 					ft_strlen(vec->content[*i]) + 1) * sizeof(char));
 		ft_memmove(tmp_content[*i], vec->content[*i],
 			ft_strlen((vec->content[*i])) + 1);
-		*i++;
+		(*i)++;
 	}
 }
 

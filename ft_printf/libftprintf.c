@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libftprintf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 17:29:41 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/29 22:23:08 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 19:56:00 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_conversion(int fd, va_list ap, char c)
 	return (count);
 }
 
-int	ft_printf(int fd,const char *format, ...)
+int	ft_printf(int fd, const char *format, ...)
 {
 	int		i;
 	int		count;

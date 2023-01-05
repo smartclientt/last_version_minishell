@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 09:00:57 by yelousse          #+#    #+#             */
-/*   Updated: 2023/01/05 12:37:41 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:06:48 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_check_quotes_utils(char *str, int *i, int *sq, int *dq)
 {
-	if (str[(*i)] == '\'')
+	if (str[(*i)] == '\'' && !(g_glob.check_quotes % 2))
 	{
 		*sq += 1;
 		while (str[(*i)] && ((size_t)(*i) < ft_strlen(str)))
@@ -27,7 +27,10 @@ void	ft_check_quotes_utils(char *str, int *i, int *sq, int *dq)
 			*sq += 1;
 	}
 	if (str[(*i)] == '"')
+	{
+		g_glob.check_quotes += 1;
 		*dq += 1;
+	}
 }
 
 void	token_word(t_env *menv, t_list **tokens, char *str, int *i)

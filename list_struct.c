@@ -6,13 +6,13 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 11:57:07 by yelousse          #+#    #+#             */
-/*   Updated: 2023/01/05 12:00:23 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:50:37 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*new_token(char *value, e_token type)
+t_token	*new_token(char *value, enum e_token type)
 {
 	t_token	*token;
 	size_t	len;

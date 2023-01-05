@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_tools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 05:45:34 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/03 22:50:26 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 19:59:11 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*update_shellvl(char *shellvl)
 	int	i;
 
 	i = 0;
-	while(shellvl[i] && ft_isalnum(shellvl[i]))
+	while (shellvl[i] && ft_isalnum(shellvl[i]))
 		i++;
 	if (!shellvl[i])
 	{
@@ -126,7 +126,8 @@ void	fill_env(t_env **menv, char **env)
 			if (ft_strncmp(key, "SHLVL", 6) != 0)
 				env_add_end(menv, env_node(get_key(env[i]), get_value(env[i])));
 			else
-				env_add_end(menv, env_node(get_key(env[i]), update_shellvl(get_value(env[i]))));
+				env_add_end(menv, env_node(get_key(env[i]),
+						update_shellvl(get_value(env[i]))));
 			free(key);
 			i++;
 		}

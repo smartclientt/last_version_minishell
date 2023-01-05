@@ -6,13 +6,13 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:22:15 by yelousse          #+#    #+#             */
-/*   Updated: 2023/01/05 12:22:35 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:46:20 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_rules(e_token prv, e_token cur)
+int	check_rules(enum e_token prv, enum e_token cur)
 {
 	return ((cur == TOK_PIPE && prv == TOK_START)
 		|| (cur == TOK_EOL

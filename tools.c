@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 03:39:11 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 12:39:45 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:06:08 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	check_quotes(char *str)
 	i = 0;
 	sq = 0;
 	dq = 0;
+	g_glob.check_quotes = 0;
 	while (str[i] && ((size_t)i < ft_strlen(str)))
 	{
 		ft_check_quotes_utils(str, &i, &sq, &dq);
@@ -77,7 +78,7 @@ t_cmd	*new_cmd(char **args, t_list *redirs)
 	return (cmd);
 }
 
-t_redir	*new_red(char *path, e_token type)
+t_redir	*new_red(char *path, enum e_token type)
 {
 	t_redir	*redir;
 

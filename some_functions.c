@@ -6,13 +6,13 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 00:41:44 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 12:39:42 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:46:36 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_redir	*new_red_(char *path, e_token type)
+t_redir	*new_red_(char *path, enum e_token type)
 {
 	t_redir	*redir;
 
@@ -74,7 +74,6 @@ t_list	*get_cmds(t_list *tokens, t_env *menv)
 	t_list		*cmds;
 	t_list		*red_list;
 	t_vector	*arg;
-	//(void)menv;
 
 	cmds = NULL;
 	tmp = tokens;

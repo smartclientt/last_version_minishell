@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 09:29:45 by yelousse          #+#    #+#             */
-/*   Updated: 2023/01/05 12:28:53 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:21:10 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 
 t_string	*expand_utils(t_string *dst, t_string *str, t_string *key)
 {
+	t_string	*tmp;
+
 	if (key->content == NULL)
 		return (free_string(&dst), free_string(&str), new_string(""));
 	if (g_glob.g_expand_dq == 1)
+	{
+		tmp = str_concate(str, key->content);
 		return (free_string(&dst), free_string(&key),
-			g_glob.g_expand_dq = 0, str_concate(str, key->content));
+			g_glob.g_expand_dq = 0, tmp);
+	}
 	return (NULL);
 }
 

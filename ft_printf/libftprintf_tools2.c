@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libftprintf_tools2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 04:14:43 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/29 22:12:19 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 19:55:41 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	ft_printf_x(int fd, int nbr)
 	int	count;
 
 	count = 0;
-	return (ft_putnbr_base_d(fd, (unsigned int)nbr, "0123456789abcdef", &count));
+	return (ft_putnbr_base_d(fd, (unsigned int)nbr,
+			"0123456789abcdef", &count));
 }
 
 int	ft_printf_xx(int fd, int nbr)
@@ -41,7 +42,8 @@ int	ft_printf_xx(int fd, int nbr)
 	int	count;
 
 	count = 0;
-	return (ft_putnbr_base_d(fd, (unsigned int)nbr, "0123456789ABCDEF", &count));
+	return (ft_putnbr_base_d(fd, (unsigned int)nbr,
+			"0123456789ABCDEF", &count));
 }
 
 int	ft_printf_u(int fd, unsigned int nbr)

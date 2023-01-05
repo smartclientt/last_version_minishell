@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:42 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 13:08:55 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:02:52 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_glob
 	int		expand_heredoc;
 	int		g_expand_dq;
 	int		heredoc_exit;
+	int		check_quotes;
 }				t_glob;
 
 t_glob			g_glob;
@@ -58,7 +59,7 @@ typedef struct s_string
 	size_t		size;
 }t_string;
 
-typedef enum t_token
+enum e_token
 {
 	TOK_START,
 	TOK_EOL,
@@ -70,18 +71,18 @@ typedef enum t_token
 	TOK_SINQTE,
 	TOK_DQUOTE,
 	TOK_PIPE,
-}e_token;
+};
 
 typedef struct s_token
 {
-	char	*value;
-	e_token	type;
+	char			*value;
+	enum e_token	type;
 }t_token;
 
 typedef struct s_redir
 {
-	e_token	type;
-	char	*filepath;
+	enum e_token	type;
+	char			*filepath;
 }t_redir;
 
 typedef struct s_cmd
@@ -191,7 +192,7 @@ void		minishell_loop(t_env **menv);
 // signals
 void		signal_handler(int sig);
 
-t_token		*new_token(char *value, e_token type);
+t_token		*new_token(char *value, enum e_token type);
 t_list		*new_node(void *content);
 void		print_list(t_list *tokens);
 void		print_list_tokens(t_list *tokens);
@@ -225,8 +226,8 @@ void		free_string(t_string **str);
 
 // some function
 t_list		*get_cmds(t_list *tokens, t_env *menv);
-t_redir		*new_red(char *path, e_token type);
-t_redir		*new_red_(char *path, e_token type);
+t_redir		*new_red(char *path, enum e_token type);
+t_redir		*new_red_(char *path, enum e_token type);
 t_cmd		*new_cmd(char **args, t_list *redirs);
 
 //expand_status
@@ -250,7 +251,7 @@ char		*new_word_v2(t_env *menv, char *str, int *i);
 int			check_quotes(char *str);
 //tools
 t_cmd		*new_cmd(char **args, t_list *redirs);
-t_redir		*new_red(char *path, e_token type);
+t_redir		*new_red(char *path, enum e_token type);
 char		*ft_strncat(char *dest, char *src, unsigned int nb);
 char		*ft_strncpy(char *dest, const char *src, unsigned int n);
 void		ft_check_quotes_utils(char *str, int *i, int *sq, int *dq);
