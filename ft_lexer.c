@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 09:00:57 by yelousse          #+#    #+#             */
-/*   Updated: 2023/01/04 09:28:34 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 01:18:51 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_string	*get_word(t_env *menv, char *str, int *i)
 			dst = expand_path_dq(menv, dst);
 	}
 	if (!dst->content)
-		return (NULL);
+		return (free_string(&dst), NULL);
 	return (dst);
 }
 
@@ -95,22 +95,14 @@ char	*again(t_env *menv, char *str, int *i)
 			ret = ft_strjoin(ret, ((t_string *)dst)->content);
 		free_string(&dst);
 	}
-	return (ret);
+	return (free_string(&dst), ret);
 }
 
 char	*new_word_v2(t_env *menv, char *str, int *i)
 {
-	int			check[2];
-	t_string	*con;
-	char		*ret;
 	char		*mm;
 
 	mm = NULL;
-	check[0] = 0;//sq
-	check[1] = 0;//dq	
-	// free(dst);
-	ret = NULL;
-	con = new_string(NULL);
 	if (!ft_strchr("\r\t\f\v\0|>< ", str[*i]) && (*i) < ((int)ft_strlen(str)))
 		mm = again(menv, str, i);
 	return (mm);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:41:38 by shbi              #+#    #+#             */
-/*   Updated: 2022/12/30 17:32:18 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 00:31:17 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char	*cmd_is_not_path(t_env *menv, char *cmd)
 		{
 			free(first_cmd);
 			free_path_env(path_env);
+			free(cmd);
 			return (path);
 		}
 		free(path);

@@ -16,7 +16,7 @@ t_string *new_string(const char *str)
     {
         new->size = ft_strlen(str);
         new->content = (char *)malloc((new->size + 1) * sizeof(char));
-        strncpy(new->content, str, new->size + 1);
+        strncpy(new->content, str, new->size + 1); // TODO
     }
     return (new);
 }
@@ -35,8 +35,8 @@ t_string *str_concate(t_string *dst, const char *str)
         return (dst);
     }
     if (dst->content)
-        strncpy(tmp_content, dst->content, tmp_size + 1);
-    strncat(tmp_content, str, tmp_size + 1);
+        strncpy(tmp_content, dst->content, tmp_size + 1); // TODO
+    strncat(tmp_content, str, tmp_size + 1); // TODO
     free_string(&dst);
     dst = new_string(NULL);
     dst->content = tmp_content;
@@ -58,7 +58,7 @@ t_string *str_append(t_string *dst, char c)
         return (dst);
     }
     if (dst->content)
-        strncpy(tmp_content, dst->content, tmp_size + 1);
+        strncpy(tmp_content, dst->content, tmp_size + 1); // TODO
     tmp_content[tmp_size - 1] = c;
     tmp_content[tmp_size] = '\0';
     free_string(&dst);

@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 22:11:40 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/04 06:50:08 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 00:58:22 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	free_redir(t_list *redir)
 	while (redir)
 	{
 		next = redir->next;
-		free(((t_redir *)redir)->filepath);
-		free((t_redir *)redir);
+		free(((t_redir *)redir->content)->filepath);
+		free((t_redir *)redir->content);
 		redir = next;
 	}
 }
@@ -64,8 +64,8 @@ void	free_cmds(t_list *cmds)
 	while (cmds)
 	{
 		next = cmds->next;
-		free_array_2d(((t_cmd *)cmds)->args);
-		free_redir(((t_cmd *)cmds)->redirs);
+		free_array_2d(((t_cmd *)cmds->content)->args);
+		free_redir(((t_cmd *)cmds->content)->redirs);
 		free(((t_cmd *)cmds));
 		cmds = next;
 	}
@@ -79,18 +79,18 @@ void	free_tokens(t_list *tokens)
 	while (tokens)
 	{
 		next = tokens->next;
-		free(((t_token *)tokens)->value);
-		free((t_token *)tokens);
+		free(((t_token *)tokens->content)->value);
+		free((t_token *)tokens->content);
 		tokens = next;
 	}
 }
 
 
-void ft_free(void **ptr)
-{
-	if (*ptr)
-	{
-		free(*ptr);
-		*ptr = NULL;
-	}
-}
+// void ft_free(void **ptr)
+// {
+// 	if (*ptr)
+// 	{
+// 		free(*ptr);
+// 		*ptr = NULL;
+// 	}
+// }

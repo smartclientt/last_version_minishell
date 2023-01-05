@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:40 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/02 05:18:45 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 00:56:33 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ t_list	*ft_lst_del_first(t_list *tokens)
 	{
 		del = tmp;
 		tmp = tmp->next;
-		free(del->content);
-		free(del);
+		free(((t_token *)del->content)->value);
+		free((t_token *)del);
 	}
 	return (tmp);
 }

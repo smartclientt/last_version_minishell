@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 09:29:45 by yelousse          #+#    #+#             */
-/*   Updated: 2023/01/04 09:40:51 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 01:15:25 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*get_kw(t_env *menv, char *str, int *i)
 	if (find_value_with_key(menv, dst->content) != NULL)
 	{
 		value = find_value_with_key(menv, dst->content);
-		return (value);
+		return (free_string(&dst), value);
 	}
 	return (NULL);
 }
@@ -91,19 +91,19 @@ t_string	*expand_path_dq(t_env *menv, t_string *dst)
 	if (v_glob.expand_heredoc == 1)
 	{
 		v_glob.expand_heredoc = 0;
-		return (dst);
+		return (free_string(&str), free_string(&key), dst);
 	}
 	while (word[i] != '\0' && i < (int)((t_string *)dst)->size)
 	{
 		if (word[i] == '$' && ft_strchr("\0\r\t\f\v ", word[i + 1]))
-			return (str_append(str, '$'));
+			return (free_string(&dst), free_string(&key), str_append(str, '$'));
 		else if (word[i] == '$')
 		{
 			key->content = get_kw_dq(menv, word, &i);
 			if (key->content == NULL)
-				return (free_string(&str), new_string(""));
+				return (free_string(&dst), free_string(&str), new_string(""));
 			if (v_glob.g_expand_dq == 1)
-				return (v_glob.g_expand_dq = 0, str_concate(str, key->content));
+				return (free_string(&dst), free_string(&key), v_glob.g_expand_dq = 0, str_concate(str, key->content));
 			str = str_concate(str, ((const char *)key->content));
 			if (!ft_strchr("\r\t\0\f\v|><\"", word[i]))
 				str = str_append(str, word[i]);
@@ -112,7 +112,7 @@ t_string	*expand_path_dq(t_env *menv, t_string *dst)
 			str = str_append(str, word[i]);
 		i++;
 	}
-	return (str);
+	return (free_string(&dst), free_string(&key), str);
 }
 
 // t_string *expand_path(t_env *menv,t_string *dst)

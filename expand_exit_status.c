@@ -34,7 +34,7 @@ t_string    *add_expand(t_string *dst)
             str = str_append(str, word[i]);
         i++;
     }
-    return (str);
+    return (free_string(&dst), str);
 }
 
 t_string    *check_expand_status(t_string *dst)

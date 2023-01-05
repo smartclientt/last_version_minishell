@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:42 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/04 06:24:57 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/05 03:18:01 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,5 +232,11 @@ t_cmd   *new_cmd(char **args, t_list *redirs);
 int find_dollar_status(char *str);
 t_string    *add_expand(t_string *dst);
 t_string    *check_expand_status(t_string *dst);
+
+//free
+void	free_tokens(t_list *tokens);
+void	free_cmds(t_list *cmds);
+void	free_redir(t_list *redir);
+void	free_array_2d(char **str);
 
 #endif
