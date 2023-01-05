@@ -21,7 +21,7 @@ t_string *new_string(const char *str)
     return (new);
 }
 
-t_string *str_concate(t_string *dst, const char *str)
+t_string *str_concate(t_string *dst, char *str)
 {
     char *tmp_content;
     size_t tmp_size;

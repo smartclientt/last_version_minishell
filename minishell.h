@@ -6,7 +6,7 @@
 /*   By: yelousse <yelousse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 01:50:42 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/05 03:18:01 by yelousse         ###   ########.fr       */
+/*   Updated: 2023/01/05 08:41:34 by yelousse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ void free_vec(t_vector **vec);
 // string
 
 t_string *new_string(const char *str);
-t_string *str_concate(t_string *dst, const char *str);
+t_string *str_concate(t_string *dst, char *str);
 t_string *str_append(t_string *dst, char c);
 void free_string(t_string **str);
 
